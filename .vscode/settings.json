@@ -1,0 +1,9 @@
+{
+  "editor.insertSpaces": true,
+  "editor.tabSize": 2,
+  "files.insertFinalNewline": true,
+  "licenser.projectName": "Pet Clinic React",
+  "licenser.license": "AL2",
+  "typescript.tsdk": "./node_modules/typescript/lib",
+  "tslint.enable": true
+}
