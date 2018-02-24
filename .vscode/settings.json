@@ -1,9 +1,31 @@
 {
   "editor.insertSpaces": true,
   "editor.tabSize": 2,
+  "editor.renderWhitespace": "boundary",
+	"editor.wordWrap": "on",
+	"editor.wordWrapColumn": 80,
+	"editor.wrappingIndent": "indent",
+	"editor.rulers": [
+		80
+	],
   "files.insertFinalNewline": true,
   "licenser.projectName": "Pet Clinic React",
   "licenser.license": "AL2",
   "typescript.tsdk": "./node_modules/typescript/lib",
-  "tslint.enable": true
+  "eslint.enable": false,
+	"xo.enable": false,
+	"css.validate": false,
+	"scss.validate": false,
+	"less.validate": false,
+  "tslint.enable": true,
+  "tslint.jsEnable": true,
+  "tslint.exclude": [
+		"**/dist/**",
+		"**/node_modules/**"
+  ],
+  "tslint.ignoreDefinitionFiles": true,
+  "prettier.singleQuote": true,
+	"prettier.useTabs": false,
+	"prettier.trailingComma": "all",
+	"prettier.printWidth": 80
 }

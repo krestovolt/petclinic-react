@@ -1,24 +1,25 @@
 {
   "compilerOptions": {
-    "target": "esnext",
-    "module": "esnext",
-    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "esModuleInterop": true,
     "importHelpers": true,
     "jsx": "preserve",
-    "noImplicitAny": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "noEmit": true,
     "noImplicitReturns": true,
-    "noImplicitThis": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
+    "outDir": "build",
     "pretty": true,
-    "rootDir": "src",
-    "strictFunctionTypes": true,
-    "suppressImplicitAnyIndexErrors": true
+    "strict": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "target": "esnext"
   },
-  "exclude": [
-    "node_modules",
-    "build"
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx"
   ]
 }
