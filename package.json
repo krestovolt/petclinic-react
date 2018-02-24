@@ -8,10 +8,7 @@
     "type": "git",
     "url": "git+https://github.com/panjiesw/petclinic-react.git"
   },
-  "keywords": [
-    "react",
-    "petclinic"
-  ],
+  "keywords": ["react", "petclinic"],
   "author": {
     "name": "Panjie Setiawan Wicaksono",
     "email": "panjie@panjiesw.com"
@@ -22,8 +19,12 @@
   },
   "homepage": "https://github.com/panjiesw/petclinic-react#readme",
   "scripts": {
-    "dev": "cross-env TS_NODE_PROJECT=\"./build/tsconfig.webpack.json\" webpack-dev-server --progress --config build/webpack.dev.conf.ts",
-    "format": "prettier --trailing-comma all --single-quote --write \"src/**/*.{ts,tsx}\" \"*.js\"",
+    "dev":
+      "cross-env TS_NODE_PROJECT=\"./build/tsconfig.webpack.json\" webpack-dev-server --config build/webpack.dev.conf.ts",
+    "format":
+      "prettier --trailing-comma all --single-quote --write \"src/**/*.{ts,tsx}\" \"*.js\"",
+    "start":
+      "nodemon --watch build --watch config -e js,json,ts --exec \"yarn dev\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
@@ -76,6 +77,7 @@
     "nodemon": "^1.15.1",
     "npm-run-all": "^4.1.2",
     "nyc": "^11.4.1",
+    "portfinder": "^1.0.13",
     "postcss-loader": "^2.1.0",
     "prettier": "^1.10.2",
     "react-hot-loader": "^3.1.3",
@@ -92,5 +94,10 @@
     "webpack": "^3.10.0",
     "webpack-dev-server": "^2.11.1",
     "webpack-merge": "^4.1.2"
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
   }
 }

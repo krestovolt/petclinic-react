@@ -16,7 +16,7 @@ export default {
       inject: false,
       template: htmlWebpackTemplate,
       appMountId: 'app',
-    }
+    },
   },
 
   dev: {
@@ -44,5 +44,11 @@ export default {
     paths: {
       output: resolve('dist'),
     },
-  }
+
+    babel: {
+      envOptions: {
+        targets: { browsers: ['last 2 versions', 'safari >= 8'] },
+      },
+    },
+  },
 };

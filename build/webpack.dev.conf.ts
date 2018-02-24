@@ -1,61 +1,24 @@
 // import path from 'path';
 import webpack from 'webpack';
+import merge from 'webpack-merge';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
 import FriendlyErrorsPlugin from 'friendly-errors-webpack-plugin';
+import portfinder from 'portfinder';
 import config from '../config';
 import devEnv from '../config/dev.env';
 import { resolve, isProd } from './utils';
+import baseWebpackConfig from './webpack.base.conf';
 
 const HOST = process.env.HOST;
 const PORT = process.env.PORT && Number(process.env.PORT);
 
-const configure = (env: any): webpack.Configuration => ({
-  devtool: config.dev.devtool as webpack.Options.Devtool,
-  context: resolve(),
+const devWebpackConfig = merge(baseWebpackConfig, {
   entry: {
-    app: './src/index.tsx',
-  },
-  output: {
-    path: config.build.paths.output,
-    filename: '[name].js',
-    publicPath: config.common.paths.assetPublicPath,
-  },
-  resolve: {
-    extensions: ['.js', '.ts', '.tsx', 'json', '.less'],
-  },
-  module: {
-    rules: [
-      {
-        test: /\.ts(x?)$/,
-        exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            presets: [
-              '@babel/preset-env',
-              '@babel/preset-react',
-              '@babel/preset-typescript',
-            ],
-          },
-        },
-      },
-    ],
-  },
-  node: {
-    // prevent webpack from injecting useless setImmediate polyfill because Vue
-    // source contains it (although only uses it if it's native).
-    setImmediate: false,
-    // prevent webpack from injecting mocks to Node native modules
-    // that does not make sense for the client
-    dgram: 'empty',
-    fs: 'empty',
-    net: 'empty',
-    tls: 'empty',
-    child_process: 'empty',
+    app: ['react-hot-loader/patch', './src/index.tsx'],
   },
   devServer: {
-    clientLogLevel: 'warning',
+    // clientLogLevel: 'warning',
     hot: true,
     contentBase: false, // since we use CopyWebpackPlugin.
     compress: true,
@@ -86,17 +49,33 @@ const configure = (env: any): webpack.Configuration => ({
         ignore: ['.*'],
       },
     ]),
-    new FriendlyErrorsPlugin({
-      compilationSuccessInfo: {
-        messages: [
-          `Your application is running here: http://${
-            config.dev.server.host
-          }:${config.dev.server.port}`,
-        ],
-        notes: [],
-      },
-    }),
   ],
 });
 
-export default configure;
+export default new Promise((res, rej) => {
+  portfinder.basePort = PORT || config.dev.server.port;
+  portfinder.getPort((err, port) => {
+    if (err) {
+      rej(err);
+    } else {
+      // publish the new Port, necessary for e2e tests
+      process.env.PORT = `${port}`;
+      // add port to devServer config
+      devWebpackConfig.devServer.port = port;
+      devWebpackConfig.plugins.push(
+        new FriendlyErrorsPlugin({
+          compilationSuccessInfo: {
+            messages: [
+              `Your application is running at: http://${
+                devWebpackConfig.devServer.host
+              }:${devWebpackConfig.devServer.port}`,
+            ],
+            notes: [],
+          },
+        }),
+      );
+
+      res(devWebpackConfig);
+    }
+  });
+});
