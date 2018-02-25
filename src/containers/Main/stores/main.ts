@@ -17,7 +17,7 @@
 import { types } from 'mobx-state-tree';
 import * as t from '@/types';
 import { Breadcrumb, IBreadcrumb } from './breadcrumb';
-import { ISideBar, ISideBarAction, SideBarStore } from './sidebar';
+import { ISideBar, ISideBarAction, SideBar } from './sidebar';
 
 export interface IMain {
   breadcrumb: IBreadcrumb[];
@@ -32,10 +32,10 @@ export interface IMainAction {
   setRootBreadcrumb(item: IBreadcrumb): void;
 }
 
-export const MainStore: t.Store<IMain, IMainAction> = types
+export const Main: t.Store<Readonly<IMain>, IMainAction> = types
   .model('Main', {
     breadcrumb: types.array(Breadcrumb),
-    sidebar: SideBarStore,
+    sidebar: SideBar,
     title: '',
   })
   .actions(self => ({

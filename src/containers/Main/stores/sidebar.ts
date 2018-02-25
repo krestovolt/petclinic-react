@@ -29,7 +29,7 @@ export interface ISideBarAction extends t.IKVFunc {
   collapse(): void;
 }
 
-export const SideBarStore: t.Store<ISideBar, ISideBarAction> = types
+export const SideBar: t.Store<Readonly<ISideBar>, ISideBarAction> = types
   .model('Sidebar', {
     collapsed: types.boolean,
     items: types.array(Menu),

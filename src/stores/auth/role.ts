@@ -14,31 +14,19 @@
  *    limitations under the License.
  */
 
-// various utility interfaces
+import { types } from 'mobx-state-tree';
+import * as t from '@/types';
 
-import { IModelType, ISnapshottable, IStateTreeNode } from 'mobx-state-tree';
-
-export interface IKV<V = any> {
-  [index: string]: V;
+export interface IRole {
+  id: number;
+  name: string;
 }
 
-// tslint:disable-next-line:ban-types
-export interface IKVFunc extends IKV<Function> {}
+export const Role: t.Store<IRole> = types.model({
+  id: types.identifier(types.number),
+  name: types.string,
+});
 
-export type Store<M = any, A = M> = IModelType<
-  Partial<{ [K in keyof M]: any }>,
-  A & M
->;
-
-export type StoreInst<M = any, A = M> = A &
-  M &
-  IStateTreeNode &
-  ISnapshottable<Partial<M>>;
-
-export interface ICommonStore {
-  loading: boolean;
-}
-
-export interface ICommonStoreAction {
-  setLoading(loading?: boolean): void;
-}
+export const ROLE_ADMIN = 'ROLE_ADMIN';
+export const ROLE_VET = 'ROLE_VET';
+export const ROLE_OWNER = 'ROLE_OWNER';

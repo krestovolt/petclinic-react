@@ -12,7 +12,8 @@
       "allow-pascal-case"
     ],
     "ordered-imports": [false],
-		"no-implicit-dependencies": false,
+    "object-literal-sort-keys": false,
+    "no-implicit-dependencies": false,
     "jsx-no-multiline-js": [false],
     "jsx-boolean-value": [false]
   },

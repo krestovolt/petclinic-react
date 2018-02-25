@@ -26,7 +26,7 @@ export default class Main extends Component {
 
   constructor(props: any) {
     super(props);
-    this.mainStore = stores.MainStore.create({
+    this.mainStore = stores.Main.create({
       breadcrumb: [{ label: 'Home', to: '', icon: 'home' }],
       sidebar: { collapsed: false, items: [] },
     });

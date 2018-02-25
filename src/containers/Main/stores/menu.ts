@@ -29,7 +29,7 @@ export interface IMenu {
   to: string | Location;
 }
 
-export const Menu: t.Store<IMenu> = types.model('Menu', {
+export const Menu: t.Store<Readonly<IMenu>> = types.model('Menu', {
   children: types.array(types.late(() => Menu)),
   className: '',
   exact: true,

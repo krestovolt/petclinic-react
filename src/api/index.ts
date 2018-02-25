@@ -14,31 +14,20 @@
  *    limitations under the License.
  */
 
-// various utility interfaces
+import { Frest } from 'frest';
+import * as json from 'frest-interceptor-json';
+import AuthApi from './auth';
 
-import { IModelType, ISnapshottable, IStateTreeNode } from 'mobx-state-tree';
+export const frest = new Frest({
+  base: '/api',
+  interceptors: {
+    before: [json.before()],
+    after: [json.after()],
+    error: [json.error()],
+  },
+});
 
-export interface IKV<V = any> {
-  [index: string]: V;
-}
+export const auth = new AuthApi(frest);
 
-// tslint:disable-next-line:ban-types
-export interface IKVFunc extends IKV<Function> {}
-
-export type Store<M = any, A = M> = IModelType<
-  Partial<{ [K in keyof M]: any }>,
-  A & M
->;
-
-export type StoreInst<M = any, A = M> = A &
-  M &
-  IStateTreeNode &
-  ISnapshottable<Partial<M>>;
-
-export interface ICommonStore {
-  loading: boolean;
-}
-
-export interface ICommonStoreAction {
-  setLoading(loading?: boolean): void;
-}
+export { ILoginPayload, ILoginResponse } from './auth';
+export { AuthApi };

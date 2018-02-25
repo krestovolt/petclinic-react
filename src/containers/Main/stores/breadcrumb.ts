@@ -60,9 +60,12 @@ export interface IBreadcrumb {
  * Sub route of Main will manipulate this via Main store to display
  * correct hierarchy.
  */
-export const Breadcrumb: t.Store<IBreadcrumb> = types.model('Breadcrumb', {
-  className: '',
-  icon: '',
-  label: '',
-  to: '',
-});
+export const Breadcrumb: t.Store<Readonly<IBreadcrumb>> = types.model(
+  'Breadcrumb',
+  {
+    className: '',
+    icon: '',
+    label: '',
+    to: '',
+  },
+);
