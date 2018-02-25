@@ -8,7 +8,10 @@
     "type": "git",
     "url": "git+https://github.com/panjiesw/petclinic-react.git"
   },
-  "keywords": ["react", "petclinic"],
+  "keywords": [
+    "react",
+    "petclinic"
+  ],
   "author": {
     "name": "Panjie Setiawan Wicaksono",
     "email": "panjie@panjiesw.com"
@@ -19,13 +22,12 @@
   },
   "homepage": "https://github.com/panjiesw/petclinic-react#readme",
   "scripts": {
-    "dev":
-      "cross-env TS_NODE_PROJECT=\"./build/tsconfig.webpack.json\" webpack-dev-server --config build/webpack.dev.conf.ts",
-    "format":
-      "prettier --trailing-comma all --single-quote --write \"src/**/*.{ts,tsx}\" \"*.js\"",
-    "start":
-      "nodemon --watch build --watch config -e js,json,ts --exec \"yarn dev\"",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "cross-env TS_NODE_PROJECT=\"./build/tsconfig.webpack.json\" webpack-dev-server --config build/webpack.dev.conf.ts",
+    "dev:watch": "nodemon --watch build --watch config -e js,json,ts --exec \"yarn dev\"",
+    "format": "prettier --trailing-comma all --single-quote --write \"src/**/*.{ts,tsx}\" \"build/**/*.{ts,tsx}\" \"config/**/*.{ts,tsx}\"",
+    "start": "run-p dev:watch \"ts -w\"",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "ts": "tsc"
   },
   "dependencies": {
     "antd": "^3.2.1",
@@ -45,6 +47,7 @@
     "@babel/preset-react": "^7.0.0-beta.40",
     "@babel/preset-stage-3": "^7.0.0-beta.40",
     "@babel/preset-typescript": "^7.0.0-beta.40",
+    "@babel/runtime": "^7.0.0-beta.40",
     "@types/copy-webpack-plugin": "^4.4.0",
     "@types/friendly-errors-webpack-plugin": "^0.1.1",
     "@types/html-webpack-template": "^6.0.2",
@@ -59,9 +62,11 @@
     "babel-loader": "8.0.0-beta.0",
     "babel-plugin-import": "^1.6.5",
     "clean-webpack-plugin": "^0.1.18",
+    "commitizen": "^2.9.6",
     "copy-webpack-plugin": "^4.4.2",
     "cross-env": "^5.1.3",
     "css-loader": "^0.28.9",
+    "cz-conventional-changelog": "^2.1.0",
     "extract-text-webpack-plugin": "^3.0.2",
     "faucet": "^0.0.1",
     "fetch-mock": "^6.0.0",

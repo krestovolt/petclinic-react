@@ -13,6 +13,7 @@ export default {
     },
 
     html: {
+      title: 'Pet Clinic',
       inject: false,
       template: htmlWebpackTemplate,
       appMountId: 'app',

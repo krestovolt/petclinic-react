@@ -20,15 +20,11 @@ const base: webpack.Configuration = {
     rules: [
       {
         test: /\.ts(x?)$/,
-        exclude: [
-          /node_modules/,
-          resolve('build'),
-          resolve('config'),
-        ],
+        exclude: [/node_modules/, resolve('build'), resolve('config')],
         loader: 'babel-loader',
         options: babelOptions,
-      }
-    ]
+      },
+    ],
   },
   node: {
     // prevent webpack from injecting useless setImmediate polyfill because Vue
@@ -42,6 +38,6 @@ const base: webpack.Configuration = {
     tls: 'empty',
     child_process: 'empty',
   },
-}
+};
 
 export default base;
