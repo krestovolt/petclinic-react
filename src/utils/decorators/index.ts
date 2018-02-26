@@ -14,8 +14,5 @@
  *    limitations under the License.
  */
 
-import * as async from './async';
-import * as strings from './strings';
-import * as decorators from './decorators';
-
-export { async, decorators, strings };
+export { default as setter } from './setter';
+export { default as toggle } from './toggle';

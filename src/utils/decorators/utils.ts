@@ -13,9 +13,21 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
+import { strings } from '@/utils';
 
-import * as async from './async';
-import * as strings from './strings';
-import * as decorators from './decorators';
+export function invokedWithArgs(args: any) {
+  return (
+    args.length !== 3 ||
+    typeof args[0] !== 'object' ||
+    typeof args[1] !== 'string' ||
+    typeof args[2] !== 'object'
+  );
+}
 
-export { async, decorators, strings };
+export function decorate(wa: boolean, decorator: any, args: any) {
+  return wa ? decorator : decorator(...args);
+}
+
+export function setterName(property: string, prefix: string = 'set') {
+  return `${prefix}${strings.capitalize(property)}`;
+}

@@ -15,26 +15,15 @@
  */
 
 import { ReactNode } from 'react';
-import { types } from 'mobx-state-tree';
 import { Location } from 'history';
-import * as t from '@/types';
 
 export interface IMenu {
   children?: IMenu[];
   className?: string;
   exact?: boolean;
   group?: boolean;
-  key: string;
+  icon?: string;
+  id: string;
   label: ReactNode;
   to: string | Location;
 }
-
-export const Menu: t.Store<Readonly<IMenu>> = types.model('Menu', {
-  children: types.array(types.late(() => Menu)),
-  className: '',
-  exact: true,
-  group: false,
-  key: '',
-  label: '',
-  to: '',
-});

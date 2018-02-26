@@ -15,9 +15,8 @@
  */
 
 import { ReactNode } from 'react';
-import { types } from 'mobx-state-tree';
 import { Location } from 'history';
-import * as t from '@/types';
+// import * as t from '@/types';
 
 /**
  * Breadcrumb type.
@@ -60,12 +59,3 @@ export interface IBreadcrumb {
  * Sub route of Main will manipulate this via Main store to display
  * correct hierarchy.
  */
-export const Breadcrumb: t.Store<Readonly<IBreadcrumb>> = types.model(
-  'Breadcrumb',
-  {
-    className: '',
-    icon: '',
-    label: '',
-    to: '',
-  },
-);

@@ -15,6 +15,5 @@
  */
 
 export * from './breadcrumb';
-export * from './main';
+export * from './ui';
 export * from './menu';
-export * from './sidebar';

@@ -14,42 +14,78 @@
  *    limitations under the License.
  */
 
-import { flow, types, getEnv } from 'mobx-state-tree';
+import { IWrappedFrestResponse } from 'frest';
+import { action, observable } from 'mobx';
 import * as a from '@/api';
-import * as t from '@/types';
+import { ICommonStore, ICommonStoreAction } from '@/types';
 
-import { Session } from './session';
-
-export interface IAuth extends t.ICommonStore {
-  isAuthenticated: boolean;
-  session: a.ILoginResponse;
+export interface IAuthStore extends ICommonStore, ICommonStoreAction {
+  readonly authenticated: boolean;
+  readonly session: a.ILoginResponse | null;
+  login(payload: a.ILoginPayload): Promise<a.ILoginResponse>;
+  logout(): Promise<void>;
+  addOnLogoutListener(listener: OnLogoutListener): void;
 }
 
-export interface IAuthAction extends t.ICommonStoreAction {
-  login(payload: a.ILoginPayload): Promise<void>;
+export type OnLogoutListener = (res: IWrappedFrestResponse<{}>) => void;
+
+export class AuthStore implements IAuthStore {
+  @observable public loading: boolean = false;
+
+  @observable public authenticated = false;
+
+  @observable public session: a.ILoginResponse | null = null;
+
+  private listeners: OnLogoutListener[] = [];
+
+  constructor(private api: a.AuthApi = a.auth) {}
+
+  @action
+  public loadingStart = () => {
+    this.loading = true;
+  };
+
+  @action
+  public loadingStop = () => {
+    this.loading = false;
+  };
+
+  public login = async (payload: a.ILoginPayload) => {
+    this.loadingStart();
+    try {
+      const result = await this.api.login(payload);
+      this.setSession(result);
+      this.setAuthenticated();
+      return result;
+    } finally {
+      this.loadingStop();
+    }
+  };
+
+  public logout = async () => {
+    this.loadingStart();
+    try {
+      const res = await this.api.logout();
+      this.listeners.forEach(listener => listener(res));
+      this.listeners = [];
+      this.setSession(null);
+      this.setAuthenticated(false);
+    } finally {
+      this.loadingStop();
+    }
+  };
+
+  public addOnLogoutListener(listener: OnLogoutListener) {
+    this.listeners.push(listener);
+  }
+
+  @action
+  private setAuthenticated(val: boolean = true) {
+    this.authenticated = val;
+  }
+
+  @action
+  private setSession(session: a.ILoginResponse | null) {
+    this.session = session;
+  }
 }
-
-export interface IAuthEnv {
-  api: a.AuthApi;
-}
-
-export const Auth: t.Store<Readonly<IAuth>, IAuthAction> = types
-  .model({
-    isAuthenticated: false,
-    loading: false,
-    session: Session,
-  })
-  .actions(self => {
-    const { api } = getEnv<IAuthEnv>(self);
-    const login = flow(function*(payload: a.ILoginPayload) {
-      const result: a.ILoginResponse = yield api.login(payload);
-      self.session = result;
-    });
-
-    return {
-      setLoading(loading: boolean = true) {
-        self.loading = loading;
-      },
-      login,
-    };
-  });

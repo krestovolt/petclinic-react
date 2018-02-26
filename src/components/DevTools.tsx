@@ -14,8 +14,13 @@
  *    limitations under the License.
  */
 
-import * as async from './async';
-import * as strings from './strings';
-import * as decorators from './decorators';
+import React from 'react';
+import MobxDevTools from 'mobx-react-devtools';
 
-export { async, decorators, strings };
+const DevTools: typeof MobxDevTools =
+  process.env.NODE_ENV === 'production'
+    ? () => <></>
+    : // tslint:disable-next-line:no-var-requires
+      require('mobx-react-devtools').default;
+
+export default DevTools;

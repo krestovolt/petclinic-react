@@ -14,14 +14,5 @@
  *    limitations under the License.
  */
 
-import { types } from 'mobx-state-tree';
-import * as a from '@/api';
-import * as t from '@/types';
-
-export const Session: t.Store<a.ILoginResponse> = types.model({
-  id: types.identifier(types.number),
-  email: types.string,
-  role: types.string,
-  firstName: '',
-  lastName: '',
-})
+export * from './role';
+export * from './auth';

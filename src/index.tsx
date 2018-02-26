@@ -1,20 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
-import App from './App';
+import Root from './containers/Root';
 
 ReactDOM.render(
   <AppContainer>
-    <App />
+    <Root />
   </AppContainer>,
   document.getElementById('app'),
 );
 
 if ((module as any).hot) {
-  (module as any).hot.accept('./App', () => {
+  (module as any).hot.accept('./containers/Root', () => {
     ReactDOM.render(
       <AppContainer>
-        <App />
+        <Root />
       </AppContainer>,
       document.getElementById('app'),
     );

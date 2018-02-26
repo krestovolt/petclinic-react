@@ -16,26 +16,30 @@
 
 import React, { Component, ReactNode } from 'react';
 import { Route } from 'react-router-dom';
-import { Provider } from 'mobx-react';
-import * as t from '@/types';
-import * as stores from './stores';
-import MainLayout from './Main';
+import { inject, observer, Provider } from 'mobx-react';
+import * as auth from '@/stores/auth';
+import * as main from './stores';
+import MainContainer from './MainContainer';
 
+export interface IMainContainerProp {
+  authStore: auth.AuthStore;
+}
+
+@inject('authStore')
+@observer
 export default class Main extends Component {
-  private mainStore: t.StoreInst<stores.IMain, stores.IMainAction>;
+  private uiStore: main.UIStore;
 
   constructor(props: any) {
     super(props);
-    this.mainStore = stores.Main.create({
-      breadcrumb: [{ label: 'Home', to: '', icon: 'home' }],
-      sidebar: { collapsed: false, items: [] },
-    });
+    this.uiStore = new main.UIStore();
+    this.uiStore.setRootBreadcrumb({ label: 'Home', to: '', icon: 'home' });
   }
 
   public render(): ReactNode {
     return (
-      <Provider mainStore={this.mainStore}>
-        <Route exact strict path="/" component={MainLayout} />
+      <Provider uiStore={this.uiStore}>
+        <Route exact strict path="/" component={MainContainer} />
       </Provider>
     );
   }

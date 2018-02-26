@@ -14,19 +14,6 @@
  *    limitations under the License.
  */
 
-import { types } from 'mobx-state-tree';
-import * as t from '@/types';
-
-export interface IRole {
-  id: number;
-  name: string;
-}
-
-export const Role: t.Store<IRole> = types.model({
-  id: types.identifier(types.number),
-  name: types.string,
-});
-
 export const ROLE_ADMIN = 'ROLE_ADMIN';
 export const ROLE_VET = 'ROLE_VET';
 export const ROLE_OWNER = 'ROLE_OWNER';

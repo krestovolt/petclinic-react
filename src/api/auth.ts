@@ -43,6 +43,14 @@ export default class AuthApi {
     throw new Error('Invalid response');
   };
 
+  public logout = async () => {
+    const res = await this.frest.post<{}>(this.path('logout'));
+    if (this.frest.isWrapped(res)) {
+      return res;
+    }
+    throw new Error('Invalid response');
+  };
+
   private path(sub: string = '') {
     return ['auth', sub];
   }

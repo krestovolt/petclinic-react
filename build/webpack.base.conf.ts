@@ -15,6 +15,9 @@ const base: webpack.Configuration = {
   },
   resolve: {
     extensions: ['.js', '.ts', '.tsx', 'json', '.less'],
+    alias: {
+      '@': resolve('src'),
+    },
   },
   module: {
     rules: [

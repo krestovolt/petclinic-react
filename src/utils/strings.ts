@@ -14,34 +14,6 @@
  *    limitations under the License.
  */
 
-import { types } from 'mobx-state-tree';
-import * as t from '@/types';
-import { IMenu, Menu } from './menu';
-
-export interface ISideBar {
-  collapsed: boolean;
-  items: IMenu[];
+export function capitalize(str: string) {
+  return `${str.charAt(0).toUpperCase()}${str.slice(1)}`;
 }
-
-export interface ISideBarAction extends t.IKVFunc {
-  toggle(): void;
-  open(): void;
-  collapse(): void;
-}
-
-export const SideBar: t.Store<Readonly<ISideBar>, ISideBarAction> = types
-  .model('Sidebar', {
-    collapsed: types.boolean,
-    items: types.array(Menu),
-  })
-  .actions(self => ({
-    toggle() {
-      self.collapsed = !self.collapsed;
-    },
-    open() {
-      self.collapsed = false;
-    },
-    collapse() {
-      self.collapsed = true;
-    },
-  }));
