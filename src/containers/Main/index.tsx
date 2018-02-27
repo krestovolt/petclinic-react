@@ -18,7 +18,7 @@ import React, { Component, ReactNode } from 'react';
 import { Route } from 'react-router-dom';
 import { inject, observer, Provider } from 'mobx-react';
 import * as auth from '@/stores/auth';
-import * as main from './stores';
+import MainStore from './store';
 import MainContainer from './MainContainer';
 
 export interface IMainContainerProp {
@@ -28,12 +28,17 @@ export interface IMainContainerProp {
 @inject('authStore')
 @observer
 export default class Main extends Component {
-  private uiStore: main.UIStore;
+  private uiStore: MainStore;
 
   constructor(props: any) {
     super(props);
-    this.uiStore = new main.UIStore();
-    this.uiStore.setRootBreadcrumb({ label: 'Home', to: '', icon: 'home' });
+    this.uiStore = new MainStore();
+    this.uiStore.setRootBreadcrumb({
+      label: 'Home',
+      to: '',
+      icon: 'home',
+      id: 'home',
+    });
   }
 
   public render(): ReactNode {

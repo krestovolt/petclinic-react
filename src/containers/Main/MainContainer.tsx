@@ -2,10 +2,10 @@ import React, { Component, ReactNode } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
 import * as auth from '@/stores/auth';
-import * as main from './stores';
+import MainStore from './store';
 
 export interface IMainContainer extends RouteComponentProps<any> {
-  uiStore: main.UIStore;
+  uiStore: MainStore;
   authStore: auth.IAuthStore;
 }
 

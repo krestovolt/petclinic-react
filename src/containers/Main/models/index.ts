@@ -15,5 +15,4 @@
  */
 
 export * from './breadcrumb';
-export * from './ui';
 export * from './menu';

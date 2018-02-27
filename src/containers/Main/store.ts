@@ -17,10 +17,9 @@
 import { action, observable } from 'mobx';
 import { ICommonStore, ICommonStoreAction } from '@/types';
 import { setter, toggle } from '@/utils/decorators';
-import { IBreadcrumb } from './breadcrumb';
-import { IMenu } from './menu';
+import { IBreadcrumb, IMenu } from './models';
 
-export interface IUIStore extends ICommonStore {
+export interface IMainStore extends ICommonStore {
   readonly breadcrumb: IBreadcrumb[];
   readonly sidebar: IMenu[];
   readonly sidebarCollapsed: boolean;
@@ -31,7 +30,7 @@ export interface IUIStore extends ICommonStore {
   setTitle(title?: string): void;
 }
 
-class UIStore implements IUIStore {
+class MainStore implements IMainStore {
   @setter('loadingStart', true)
   @setter('loadingStop', false)
   @observable
@@ -74,7 +73,7 @@ class UIStore implements IUIStore {
   };
 }
 
-interface UIStore extends IUIStore, ICommonStoreAction {
+interface MainStore extends IMainStore, ICommonStoreAction {
   setBreadcrumb(breadcrumbs: IBreadcrumb[]): void;
   setSidebar(sidebar: IMenu[]): void;
   sidebarToggle(): void;
@@ -82,4 +81,4 @@ interface UIStore extends IUIStore, ICommonStoreAction {
   sidebarCollapse(): void;
 }
 
-export { UIStore };
+export default MainStore;

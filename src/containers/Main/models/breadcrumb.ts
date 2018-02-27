@@ -35,6 +35,7 @@ export interface IBreadcrumb {
    *
    */
   icon?: string;
+  id: string;
   /**
    * The label of this breadcrumb item. It can be a react component/element
    *
