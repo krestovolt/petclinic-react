@@ -19,12 +19,12 @@ export default class Root extends Component {
   public render(): ReactNode {
     return (
       <>
-        <DevTools />
         <Provider authStore={this.authStore}>
           <BrowserRouter>
             <Route exact strict path="/" component={Main} />
           </BrowserRouter>
         </Provider>
+        <DevTools position={{bottom: 20, right: 20}} />
       </>
     );
   }

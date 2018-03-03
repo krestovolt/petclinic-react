@@ -14,5 +14,7 @@
  *    limitations under the License.
  */
 
-export * from './role';
+import * as roles from './role';
+
 export * from './auth';
+export { roles };

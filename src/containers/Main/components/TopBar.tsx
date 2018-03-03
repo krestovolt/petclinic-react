@@ -14,35 +14,88 @@
  *    limitations under the License.
  */
 
-import React, { SFC, ValidationMap } from 'react';
+import React, { SFC } from 'react';
+import { Link } from 'react-router-dom';
+import { toJS } from 'mobx';
 import { Layout, Menu, Icon } from 'antd';
 import { ClickParam } from 'antd/lib/menu';
+import { ILoginResponse } from '@/api';
 import { IMenu } from '../models';
 import { renderMenu } from '../utils';
+// import UserMenuTitle from './UserMenuTitle';
+
+const { Header } = Layout;
+const { Item, SubMenu } = Menu;
 
 export interface TopBarProps {
   menu: IMenu[];
   sidebarCollapsed: boolean;
+  session: ILoginResponse;
   sidebarToggle: () => any;
   onMenuClick: (param: ClickParam) => any;
 }
 
 const TopBar: SFC<TopBarProps> = props => (
-  <Layout.Header className="pc-top-bar">
-    <Icon
-      className="pc-drawer-button"
-      type={props.sidebarCollapsed ? 'menu-unfold' : 'menu-fold'}
-      onClick={props.sidebarToggle}
-    />
-    <Menu
+  <Header className="pc-top-bar light">
+    <div className="pc-drawer-button">
+      <Icon
+        type={props.sidebarCollapsed ? 'menu-unfold' : 'menu-fold'}
+        onClick={props.sidebarToggle}
+      />
+    </div>
+    <div className="pc-top-bar-menu-container">
+      <Menu mode="horizontal" onClick={props.onMenuClick}>
+        {toJS(props.menu).map(m => renderMenu(m))}
+        {/* <SubMenu
+         className="pc-menu-sub pc-user-menu"
+          key="header.user"
+          title={<UserMenuTitle name="Foo Bar" role="Administrator" />}
+        >
+          <Item>
+            <Link to="/user/profile">Profile</Link>
+          </Item>
+        </SubMenu> */}
+      </Menu>
+    </div>
+    {/* <Menu
       className="pc-top-bar-menu"
-      theme="dark"
+      // theme="dark"
       mode="horizontal"
       onClick={props.onMenuClick}
     >
-      {props.menu.map(renderMenu)}
-    </Menu>
-  </Layout.Header>
+      <Menu.SubMenu
+        className="pc-menu-sub pc-user-menu"
+        key="header.user"
+        title={<UserMenuTitle name="Foo Bar" role="Administrator" />}
+      >
+        <Menu.Item className="pc-menu-item" key="header.user.setting.profile">
+          <Link to="/user/profile">Profile</Link>
+        </Menu.Item>
+        <Menu.Item
+          className="pc-menu-item"
+          key="header.user.setting.cp"
+          title="Change Password"
+        >
+          Change Password
+        </Menu.Item>
+        <Menu.Divider />
+        <Menu.Item
+          className="pc-menu-item"
+          key="header.user.logout"
+          title="Logout"
+        >
+          Logout
+        </Menu.Item>
+      </Menu.SubMenu>
+      <Menu.Item
+        className="pc-menu-item"
+        key="header.user.logout2"
+        title="Logout"
+      >
+        Logout
+      </Menu.Item>
+    </Menu> */}
+  </Header>
 );
 
 export default TopBar;

@@ -14,20 +14,18 @@
  *    limitations under the License.
  */
 
-import { Frest } from 'frest';
-import * as json from 'frest-json';
-import AuthApi from './auth';
+import { RouteComponentProps } from 'react-router-dom';
+import { ClickParam } from 'antd/lib/menu';
+import { ILoginResponse } from '@/api/auth';
+import {IAuthStore} from '@/stores/auth';
+import MainStore from '../store';
 
-export const frest = new Frest({
-  base: '/api',
-  interceptors: {
-    before: [json.before()],
-    after: [json.after()],
-    error: [json.error()],
-  },
-});
+export interface IMainLayoutProps extends RouteComponentProps<any> {
+  uiStore: MainStore;
+  authStore: IAuthStore;
+}
 
-export const auth = new AuthApi(frest);
-
-export { ILoginPayload, ILoginResponse } from './auth';
-export { AuthApi };
+export interface ILayoutProps extends IMainLayoutProps {
+  session: ILoginResponse;
+  onMenuClick: (ev: ClickParam) => any;
+}

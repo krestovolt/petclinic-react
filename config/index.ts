@@ -17,6 +17,9 @@ export default {
       inject: false,
       template: htmlWebpackTemplate,
       appMountId: 'app',
+      links: [
+        '/static/global.css'
+      ]
     },
   },
 

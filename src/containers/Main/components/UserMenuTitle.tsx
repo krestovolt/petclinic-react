@@ -14,20 +14,24 @@
  *    limitations under the License.
  */
 
-import { Frest } from 'frest';
-import * as json from 'frest-json';
-import AuthApi from './auth';
+import React, { SFC } from 'react';
+import { Icon, Row, Col } from 'antd';
 
-export const frest = new Frest({
-  base: '/api',
-  interceptors: {
-    before: [json.before()],
-    after: [json.after()],
-    error: [json.error()],
-  },
-});
+export interface UserMenuTitleProps {
+  name: string;
+  role: string;
+}
 
-export const auth = new AuthApi(frest);
+const UserMenuTitle: SFC<UserMenuTitleProps> = ({ name, role }) => (
+  <Row type="flex">
+    <Col span={24} className="pc-user-menu-title">
+      <Row>
+        <Icon type="user" />
+        {name}
+      </Row>
+      <Row>{role}</Row>
+    </Col>
+  </Row>
+);
 
-export { ILoginPayload, ILoginResponse } from './auth';
-export { AuthApi };
+export default UserMenuTitle;

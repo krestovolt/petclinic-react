@@ -19,19 +19,22 @@ import { Route } from 'react-router-dom';
 import { inject, observer, Provider } from 'mobx-react';
 import * as auth from '@/stores/auth';
 import MainStore from './store';
-import MainContainer from './MainContainer';
+import UserMenuTitle from './components/UserMenuTitle';
+import MainLayout from './layout/Main';
+import './style';
 
-export interface IMainContainerProp {
+export interface IMainProps {
   authStore: auth.AuthStore;
 }
 
 @inject('authStore')
 @observer
-export default class Main extends Component {
+export default class Main extends Component<IMainProps> {
   private uiStore: MainStore;
 
-  constructor(props: any) {
+  constructor(props: IMainProps) {
     super(props);
+    // const { authStore } = props;
     this.uiStore = new MainStore();
     this.uiStore.setRootBreadcrumb({
       label: 'Home',
@@ -39,12 +42,27 @@ export default class Main extends Component {
       icon: 'home',
       id: 'home',
     });
+    this.uiStore.setTopbar([
+      {
+        id: 'header.user',
+        to: '',
+        label: <UserMenuTitle name="Foo Bar" role="Administrator" />,
+        className: 'pc-user-menu',
+        children: [
+          {
+            id: 'header.user.profile',
+            to: '/user/profile',
+            label: 'Profile',
+          },
+        ],
+      },
+    ]);
   }
 
   public render(): ReactNode {
     return (
       <Provider uiStore={this.uiStore}>
-        <Route exact strict path="/" component={MainContainer} />
+        <Route exact strict path="/" component={MainLayout} />
       </Provider>
     );
   }

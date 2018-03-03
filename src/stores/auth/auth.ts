@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-import { IWrappedFrestResponse } from 'frest';
+import { IResponse } from 'frest';
 import { action, observable } from 'mobx';
 import * as a from '@/api';
 import { ICommonStore, ICommonStoreAction } from '@/types';
@@ -27,7 +27,7 @@ export interface IAuthStore extends ICommonStore, ICommonStoreAction {
   addOnLogoutListener(listener: OnLogoutListener): void;
 }
 
-export type OnLogoutListener = (res: IWrappedFrestResponse<{}>) => void;
+export type OnLogoutListener = (res: IResponse<{}>) => void;
 
 export class AuthStore implements IAuthStore {
   @observable public loading: boolean = false;
@@ -67,9 +67,7 @@ export class AuthStore implements IAuthStore {
     try {
       const res = await this.api.logout();
       this.listeners.forEach(listener => listener(res));
-      this.listeners = [];
-      this.setSession(null);
-      this.setAuthenticated(false);
+      this.doLogout();
     } finally {
       this.loadingStop();
     }
@@ -87,5 +85,12 @@ export class AuthStore implements IAuthStore {
   @action
   private setSession(session: a.ILoginResponse | null) {
     this.session = session;
+  }
+
+  @action
+  private doLogout() {
+    this.listeners = [];
+    this.setSession(null);
+    this.setAuthenticated(false);
   }
 }

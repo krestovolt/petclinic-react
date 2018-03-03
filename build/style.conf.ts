@@ -14,20 +14,31 @@
  *    limitations under the License.
  */
 
-import { Frest } from 'frest';
-import * as json from 'frest-json';
-import AuthApi from './auth';
+import autoprefixer from 'autoprefixer';
+import ExtractTextPlugin from 'extract-text-webpack-plugin';
 
-export const frest = new Frest({
-  base: '/api',
-  interceptors: {
-    before: [json.before()],
-    after: [json.after()],
-    error: [json.error()],
-  },
-});
+const style = (vars: any = {}) => {
+  const fallback = 'style-loader';
+  const use = [
+    { loader: 'css-loader', options: { modules: false, importLoaders: 2 } },
+    { loader: 'postcss-loader', options: { plugins: () => autoprefixer() } },
+    { loader: 'less-loader' },
+  ];
+  const test = /.less$/;
 
-export const auth = new AuthApi(frest);
+  const rule = {
+    test,
+    use: [fallback, ...use],
+  };
+  const extract = {
+    test,
+    use: ExtractTextPlugin.extract({
+      fallback,
+      use,
+    }),
+  };
 
-export { ILoginPayload, ILoginResponse } from './auth';
-export { AuthApi };
+  return { rule, extract };
+};
+
+export default style;

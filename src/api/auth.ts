@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-import { IFrest } from 'frest';
+import { Frest } from 'frest';
 
 export interface ILoginPayload {
   email: string;
@@ -26,30 +26,24 @@ export interface ILoginResponse {
   id: number;
   email: string;
   role: string;
-  firstName: string;
-  lastName: string;
+  firstName?: string;
+  lastName?: string;
 }
 
 export default class AuthApi {
-  constructor(private frest: IFrest) {}
+  constructor(private frest: Frest) {}
 
   public login = async (body: ILoginPayload) => {
     const res = await this.frest.post<ILoginResponse>(this.path('login'), {
       body,
     });
-    if (this.frest.isWrapped(res) && res.value) {
-      return res.value;
+    if (res.body) {
+      return res.body;
     }
     throw new Error('Invalid response');
   };
 
-  public logout = async () => {
-    const res = await this.frest.post<{}>(this.path('logout'));
-    if (this.frest.isWrapped(res)) {
-      return res;
-    }
-    throw new Error('Invalid response');
-  };
+  public logout = () => this.frest.post<{}>(this.path('logout'));
 
   private path(sub: string = '') {
     return ['auth', sub];

@@ -22,12 +22,14 @@ import { IBreadcrumb, IMenu } from './models';
 export interface IMainStore extends ICommonStore {
   readonly breadcrumb: IBreadcrumb[];
   readonly sidebar: IMenu[];
+  readonly topbar: IMenu[];
   readonly sidebarCollapsed: boolean;
   readonly title: string;
   breadcrumbPop(): void;
   breadcrumbAdd(item: IBreadcrumb): void;
   setRootBreadcrumb(item: IBreadcrumb): void;
   setTitle(title?: string): void;
+  subdomain(): string;
 }
 
 class MainStore implements IMainStore {
@@ -43,6 +45,10 @@ class MainStore implements IMainStore {
   @setter
   @observable
   public sidebar: IMenu[] = [];
+
+  @setter
+  @observable
+  public topbar: IMenu[] = [];
 
   @toggle('sidebarToggle')
   @setter('sidebarOpen', false)
@@ -71,11 +77,17 @@ class MainStore implements IMainStore {
   public setTitle = (title: string = '') => {
     this.title = title;
   };
+
+  public subdomain(): string {
+    const parts = window.location.host.split('.');
+    return parts.length === 3 ? parts[0] : '';
+  }
 }
 
 interface MainStore extends IMainStore, ICommonStoreAction {
   setBreadcrumb(breadcrumbs: IBreadcrumb[]): void;
   setSidebar(sidebar: IMenu[]): void;
+  setTopbar(topbar: IMenu[]): void;
   sidebarToggle(): void;
   sidebarOpen(): void;
   sidebarCollapse(): void;

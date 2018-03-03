@@ -8,6 +8,7 @@ import portfinder from 'portfinder';
 import config from '../config';
 import devEnv from '../config/dev.env';
 import { resolve, isProd } from './utils';
+import style from './style.conf';
 import baseWebpackConfig from './webpack.base.conf';
 
 const HOST = process.env.HOST;
@@ -16,6 +17,11 @@ const PORT = process.env.PORT && Number(process.env.PORT);
 const devWebpackConfig = merge(baseWebpackConfig, {
   entry: {
     app: ['react-hot-loader/patch', './src/index.tsx'],
+  },
+  module: {
+    rules: [
+      style().rule,
+    ]
   },
   devServer: {
     // clientLogLevel: 'warning',
