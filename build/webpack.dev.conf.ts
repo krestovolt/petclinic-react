@@ -13,8 +13,10 @@ import baseWebpackConfig from './webpack.base.conf';
 
 const HOST = process.env.HOST;
 const PORT = process.env.PORT && Number(process.env.PORT);
+const MOCK = process.env.MOCK && Boolean(process.env.MOCK);
 
 const devWebpackConfig = merge(baseWebpackConfig, {
+  devtool: config.dev.devtool as any,
   entry: {
     app: ['react-hot-loader/patch', './src/index.tsx'],
   },
@@ -39,7 +41,10 @@ const devWebpackConfig = merge(baseWebpackConfig, {
   },
   plugins: [
     new webpack.DefinePlugin({
-      'process.env': devEnv,
+      'process.env': {
+        ...devEnv,
+        MOCK,
+      },
     }),
     new webpack.HotModuleReplacementPlugin(),
     // HMR shows correct file names in console on update.

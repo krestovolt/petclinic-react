@@ -22,6 +22,7 @@ import { ICommonStore, ICommonStoreAction } from '@/types';
 export interface IAuthStore extends ICommonStore, ICommonStoreAction {
   readonly authenticated: boolean;
   readonly session: a.ILoginResponse | null;
+  loadSession(): Promise<any>;
   login(payload: a.ILoginPayload): Promise<a.ILoginResponse>;
   logout(): Promise<void>;
   addOnLogoutListener(listener: OnLogoutListener): void;
@@ -38,7 +39,10 @@ export class AuthStore implements IAuthStore {
 
   private listeners: OnLogoutListener[] = [];
 
-  constructor(private api: a.AuthApi = a.auth) {}
+  constructor(
+    private api: a.AuthApi = a.auth,
+    private user: a.UserApi = a.user,
+  ) {}
 
   @action
   public loadingStart = () => {
@@ -48,6 +52,14 @@ export class AuthStore implements IAuthStore {
   @action
   public loadingStop = () => {
     this.loading = false;
+  };
+
+  public loadSession = async () => {
+    this.loadingStart();
+    try {
+      const result = await this.user.me();
+    } finally {
+    }
   };
 
   public login = async (payload: a.ILoginPayload) => {

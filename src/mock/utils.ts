@@ -14,26 +14,15 @@
  *    limitations under the License.
  */
 
-import { Frest } from 'frest';
-import * as json from 'frest-json';
-import AuthApi from './auth';
-import UserApi from './user';
-
-export const frest = new Frest({
-  base: '/api',
-  interceptors: {
-    before: [json.before()],
-    after: [json.after()],
-    error: [json.error()],
-  },
-});
-
-export const auth = new AuthApi(frest);
-export const user = new UserApi(frest);
-
-export const withMock = (fetchFn: typeof fetch) => {
-  frest.mergeConfig({ fetch: fetchFn });
+export const jsonRes = (
+  body: any,
+  headers: Headers = new Headers(),
+  status: number = 200,
+): any => {
+  headers.set('Content-Type', 'application/json');
+  return {
+    body: JSON.stringify(Array.isArray(body) ? { data: body } : body),
+    headers,
+    status,
+  };
 };
-
-export { ILoginPayload, ILoginResponse } from './auth';
-export { AuthApi, UserApi };

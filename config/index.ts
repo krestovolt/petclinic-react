@@ -51,8 +51,12 @@ export default {
 
     babel: {
       envOptions: {
-        targets: { browsers: ['last 2 versions', 'safari >= 8'] },
+        targets: { browsers: ['defaults', 'safari >= 8'] },
       },
     },
+
+    productionSourceMap: true,
+    // https://webpack.js.org/configuration/devtool/#production
+    devtool: '#source-map',
   },
 };

@@ -14,26 +14,8 @@
  *    limitations under the License.
  */
 
-import { Frest } from 'frest';
-import * as json from 'frest-json';
-import AuthApi from './auth';
-import UserApi from './user';
+import React, { Component, ReactNode } from 'react';
 
-export const frest = new Frest({
-  base: '/api',
-  interceptors: {
-    before: [json.before()],
-    after: [json.after()],
-    error: [json.error()],
-  },
-});
+export interface ProtectedRouteProps {
 
-export const auth = new AuthApi(frest);
-export const user = new UserApi(frest);
-
-export const withMock = (fetchFn: typeof fetch) => {
-  frest.mergeConfig({ fetch: fetchFn });
-};
-
-export { ILoginPayload, ILoginResponse } from './auth';
-export { AuthApi, UserApi };
+}

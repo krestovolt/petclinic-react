@@ -37,7 +37,7 @@ export default class AuthApi {
     const res = await this.frest.post<ILoginResponse>(this.path('login'), {
       body,
     });
-    if (res.body) {
+    if (res.origin.ok && res.body) {
       return res.body;
     }
     throw new Error('Invalid response');

@@ -14,26 +14,28 @@
  *    limitations under the License.
  */
 
-import { Frest } from 'frest';
-import * as json from 'frest-json';
-import AuthApi from './auth';
-import UserApi from './user';
+import fetchMock from 'fetch-mock';
+import * as path from './path';
+import { jsonRes } from './utils';
 
-export const frest = new Frest({
-  base: '/api',
-  interceptors: {
-    before: [json.before()],
-    after: [json.after()],
-    error: [json.error()],
+export const roles = [
+  {
+    id: 1,
+    name: 'ROLE_ADMIN',
   },
-});
+  {
+    id: 2,
+    name: 'ROLE_VET',
+  },
+  {
+    id: 3,
+    name: 'ROLE_OWNER',
+  },
+];
 
-export const auth = new AuthApi(frest);
-export const user = new UserApi(frest);
-
-export const withMock = (fetchFn: typeof fetch) => {
-  frest.mergeConfig({ fetch: fetchFn });
+export const mockRoles = (fm: typeof fetchMock) => {
+  fm.get(path.ROLE, jsonRes(roles));
+  roles.forEach(role => {
+    fm.get(`${path.ROLE}/${role.id}`, jsonRes(role));
+  });
 };
-
-export { ILoginPayload, ILoginResponse } from './auth';
-export { AuthApi, UserApi };

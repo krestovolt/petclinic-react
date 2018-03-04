@@ -15,25 +15,20 @@
  */
 
 import { Frest } from 'frest';
-import * as json from 'frest-json';
-import AuthApi from './auth';
-import UserApi from './user';
+import { ILoginResponse } from './auth';
 
-export const frest = new Frest({
-  base: '/api',
-  interceptors: {
-    before: [json.before()],
-    after: [json.after()],
-    error: [json.error()],
-  },
-});
+export default class UserApi {
+  constructor(private frest: Frest) {}
 
-export const auth = new AuthApi(frest);
-export const user = new UserApi(frest);
+  public me = async () => {
+    const res = await this.frest.get<ILoginResponse>(this.path('me'));
+    if (res.origin.ok && res.body) {
+      return res.body;
+    }
+    throw new Error('Invalid response');
+  };
 
-export const withMock = (fetchFn: typeof fetch) => {
-  frest.mergeConfig({ fetch: fetchFn });
-};
-
-export { ILoginPayload, ILoginResponse } from './auth';
-export { AuthApi, UserApi };
+  private path(sub: string = '') {
+    return ['users', sub];
+  }
+}
