@@ -17,7 +17,8 @@
     "no-submodule-imports": [true, "@", "antd"],
     "no-implicit-dependencies": false,
     "jsx-no-multiline-js": [false],
-    "jsx-boolean-value": [false]
+    "jsx-boolean-value": [false],
+    "no-console": false
   },
   "jsRules": {
     "max-line-length": [true, 80],
@@ -32,7 +33,7 @@
     "ordered-imports": [false],
     "object-literal-sort-keys": false,
     "no-unused-expression": true,
-    "no-console": [false],
+    "no-console": false,
     "prefer-conditional-expression": false,
     "jsx-no-multiline-js": [false],
     "jsx-boolean-value": [false]

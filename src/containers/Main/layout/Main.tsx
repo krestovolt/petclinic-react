@@ -23,7 +23,7 @@ import { ILoginResponse } from '@/api';
 import { IMainLayoutProps } from './props';
 import Admin from './Admin';
 
-class MainLayout extends Component<IMainLayoutProps> {
+export default abstract class Main extends Component<IMainLayoutProps> {
   // @computed
   // get session(): ILoginResponse {
   //   return this.props.authStore.session as ILoginResponse;
@@ -46,21 +46,6 @@ class MainLayout extends Component<IMainLayoutProps> {
     return <Layout className="pc-main">{this.renderLayout()}</Layout>;
   }
 
-  private renderLayout(): ReactNode {
-    const { children, ...others } = this.props;
-    console.log('this.isAdmin()', this.isAdmin());
-    if (this.isAdmin()) {
-      return (
-        <Admin
-          {...others}
-          session={this.session}
-          onMenuClick={this.onMenuClick}
-        />
-      );
-    }
-    return null;
-  }
-
   private logoutListener = () => {
     // immediately go to login page when logged out
     this.props.history.replace('/auth/login');
@@ -69,28 +54,4 @@ class MainLayout extends Component<IMainLayoutProps> {
   private onMenuClick = ({ key }: ClickParam) => {
     console.log('menu clicked', key);
   };
-
-  private isAdmin() {
-    return this.url('admin');
-  }
-
-  private isVet() {
-    return this.url('vet');
-  }
-
-  private isOwner() {
-    return this.url('owner');
-  }
-
-  private url(role: string) {
-    const { uiStore } = this.props;
-    const authorized = this.session.role === `ROLE_${role.toUpperCase()}`;
-    if (process.env.NODE_ENV === 'production') {
-      return authorized && uiStore.subdomain() === 'admin';
-    }
-    return authorized;
-  }
 }
-
-export { MainLayout };
-export default inject('uiStore', 'authStore')(observer(MainLayout));

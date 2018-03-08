@@ -19,28 +19,30 @@ import { Route, RouteComponentProps, RouteProps } from 'react-router-dom';
 import universal, { Module } from 'react-universal-component';
 
 export interface LazyRouteProps extends RouteProps {
-  loading?: ComponentType<any>;
-  loader(): Promise<Module<RouteComponentProps<any>>>;
+  loading?: ComponentType<RouteComponentProps<any>>;
+  loader(...args: any[]): Promise<Module<RouteComponentProps<any>>>;
 }
 
-export default class LazyRoute extends PureComponent<LazyRouteProps> {
-  private LazyComponent: ComponentType<RouteComponentProps<any>>;
+export default class LazyRoute<
+  P extends LazyRouteProps = LazyRouteProps
+> extends PureComponent<P> {
+  protected LazyComponent: ComponentType<RouteComponentProps<any>>;
 
-  constructor(props: LazyRouteProps, context?: any) {
+  constructor(
+    props: P,
+    context?: any,
+    uniLoader = () => {
+      console.info('LazyRoute - loading component')
+      return props.loader();
+    },
+    opts = { minDelay: 200, loading: props.loading },
+  ) {
     super(props, context);
-    const { loader, loading } = this.props;
-
-    this.LazyComponent = universal<RouteComponentProps<any>, any>(
-      () => loader(),
-      {
-        minDelay: 200,
-        loading,
-      },
-    );
+    this.LazyComponent = universal<RouteComponentProps<any>>(uniLoader, opts);
   }
 
   public render(): ReactNode {
-    const { loader, ...rest } = this.props;
+    const { loader, ...rest } = this.props as any;
 
     return <Route {...rest} render={this.doRender} />;
   }

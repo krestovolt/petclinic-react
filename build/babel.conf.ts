@@ -8,16 +8,29 @@ const presets: any[] = [
   '@babel/preset-typescript',
 ];
 const plugins: any[] = [
-  ['import', { libraryName: 'antd', libraryDirectory: 'es', style: true }],
+  [
+    'import',
+    { libraryName: 'antd', libraryDirectory: 'es', style: true },
+    // [
+    //   { libraryName: 'antd', libraryDirectory: 'es', style: true },
+    //   {
+    //     libraryName: 'lodash',
+    //     libraryDirectory: '',
+    //     camel2DashComponentName: false,
+    //     camel2UnderlineComponentName: false,
+    //   },
+    // ],
+  ],
   '@babel/plugin-proposal-decorators',
   ['@babel/transform-runtime', { polyfill: false }],
 ];
 
-if (isProd) {
+if (isProd()) {
   presets[0][1] = {
     ...presets[0][1],
     ...config.build.babel.envOptions,
   };
+  // plugins.push(['transform-remove-console', { exclude: ['error', 'warn'] }]);
 } else {
   plugins.push('react-hot-loader/babel');
 }

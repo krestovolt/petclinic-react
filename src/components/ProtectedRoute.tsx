@@ -14,8 +14,32 @@
  *    limitations under the License.
  */
 
-import React, { Component, ReactNode } from 'react';
+import React from 'react';
+import { Redirect, withRouter } from 'react-router-dom';
+import { IAuthStore } from '@/stores/auth';
+import LazyRoute, { LazyRouteProps } from './LazyRoute';
 
-export interface ProtectedRouteProps {
+const RedirectLogin: any = withRouter((props: any) => {
+  return (
+    <Redirect
+      to={{ pathname: '/auth/login', state: { from: props.location } }}
+    />
+  );
+});
 
+export interface ProtectedRouteProps extends LazyRouteProps {
+  authStore: IAuthStore;
+}
+
+export default class ProtectedRoute extends LazyRoute<ProtectedRouteProps> {
+  constructor(props: ProtectedRouteProps, context?: any) {
+    super(props, context, () => {
+      console.info('ProtectedRoute - loading protected component')
+      return props.authStore
+      .loadSession()
+      .then(_ => props.loader(props.authStore))
+      .catch(_ => RedirectLogin)
+    },
+    );
+  }
 }

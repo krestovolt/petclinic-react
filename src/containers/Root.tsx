@@ -1,10 +1,13 @@
 import React, { Component, ReactNode } from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch } from 'react-router-dom';
 import { Provider } from 'mobx-react';
 import { useStrict } from 'mobx';
 import { AuthStore, IAuthStore } from '@/stores/auth';
-import Main from '@/containers/Main';
 import DevTools from '@/components/DevTools';
+import ProtectedRoute from '@/components/ProtectedRoute';
+import LazyRoute from '@/components/LazyRoute';
+import mainLoader from '@/containers/Main/loader';
+import authLoader from '@/containers/Auth/loader';
 
 useStrict(true);
 
@@ -20,11 +23,20 @@ export default class Root extends Component {
     return (
       <>
         <Provider authStore={this.authStore}>
-          <BrowserRouter>
-            <Route exact strict path="/" component={Main} />
-          </BrowserRouter>
+          <Router>
+            <Switch>
+              <LazyRoute exact strict path="/auth/login" loader={authLoader} />
+              <ProtectedRoute
+                exact
+                strict
+                path="/"
+                authStore={this.authStore}
+                loader={mainLoader}
+              />
+            </Switch>
+          </Router>
         </Provider>
-        <DevTools position={{bottom: 20, right: 20}} />
+        <DevTools position={{ bottom: 20, right: 20 }} />
       </>
     );
   }

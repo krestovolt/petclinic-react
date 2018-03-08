@@ -4,6 +4,9 @@ import merge from 'webpack-merge';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
 import FriendlyErrorsPlugin from 'friendly-errors-webpack-plugin';
+// tslint:disable-next-line:no-submodule-imports
+// import DashboardPlugin from 'webpack-dashboard/plugin';
+import path from 'path';
 import portfinder from 'portfinder';
 import config from '../config';
 import devEnv from '../config/dev.env';
@@ -21,12 +24,21 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     app: ['react-hot-loader/patch', './src/index.tsx'],
   },
   module: {
-    rules: [
-      style().rule,
-    ]
+    rules: [style().rule],
   },
   devServer: {
     // clientLogLevel: 'warning',
+    historyApiFallback: {
+      rewrites: [
+        {
+          from: /.*/,
+          to: path.posix.join(
+            config.common.paths.assetPublicPath,
+            'index.html',
+          ),
+        },
+      ],
+    },
     hot: true,
     contentBase: false, // since we use CopyWebpackPlugin.
     compress: true,
@@ -73,6 +85,7 @@ export default new Promise((res, rej) => {
       process.env.PORT = `${port}`;
       // add port to devServer config
       devWebpackConfig.devServer.port = port;
+      // devWebpackConfig.plugins.push(new DashboardPlugin());
       devWebpackConfig.plugins.push(
         new FriendlyErrorsPlugin({
           compilationSuccessInfo: {

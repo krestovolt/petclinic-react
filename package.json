@@ -68,6 +68,7 @@
     "ava": "^1.0.0-beta.3",
     "babel-loader": "8.0.0-beta.0",
     "babel-plugin-import": "^1.6.5",
+    "babel-plugin-transform-remove-console": "^6.9.0",
     "clean-webpack-plugin": "^0.1.18",
     "commitizen": "^2.9.6",
     "copy-webpack-plugin": "^4.4.2",

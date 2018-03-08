@@ -22,7 +22,7 @@ import { ICommonStore, ICommonStoreAction } from '@/types';
 export interface IAuthStore extends ICommonStore, ICommonStoreAction {
   readonly authenticated: boolean;
   readonly session: a.ILoginResponse | null;
-  loadSession(): Promise<any>;
+  loadSession(): Promise<a.ILoginResponse>;
   login(payload: a.ILoginPayload): Promise<a.ILoginResponse>;
   logout(): Promise<void>;
   addOnLogoutListener(listener: OnLogoutListener): void;
@@ -55,10 +55,15 @@ export class AuthStore implements IAuthStore {
   };
 
   public loadSession = async () => {
+    console.info('AuthStore#loadSession');
     this.loadingStart();
     try {
       const result = await this.user.me();
+      this.setSession(result);
+      this.setAuthenticated();
+      return result;
     } finally {
+      this.loadingStop();
     }
   };
 

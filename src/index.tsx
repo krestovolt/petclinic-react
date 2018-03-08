@@ -12,12 +12,10 @@ const render = () => {
   );
 };
 
-console.log('process.env.MOCK', process.env.MOCK)
-
 if (process.env.MOCK) {
   import('./mock')
     .then(m => {
-      console.log('loaded mock module', m);
+      console.info('loaded mock module', m);
       const fm = m.mock();
       // return import('./api').then(a => a.withMock(fm));
       return fm;
