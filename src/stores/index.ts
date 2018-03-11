@@ -14,7 +14,12 @@
  *    limitations under the License.
  */
 
-import * as roles from './role';
+// Global Stores
+// Contains modules of store that available globally in all layout
 
-export * from './auth';
-export { roles };
+export * from './constants';
+export {
+  default as SessionStore,
+  ISessionStore,
+  OnLogoutListener,
+} from './SessionStore';

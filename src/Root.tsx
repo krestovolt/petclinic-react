@@ -2,36 +2,36 @@ import React, { Component, ReactNode } from 'react';
 import { BrowserRouter as Router, Switch } from 'react-router-dom';
 import { Provider } from 'mobx-react';
 import { useStrict } from 'mobx';
-import { AuthStore, IAuthStore } from '@/stores/auth';
-import DevTools from '@/components/DevTools';
-import ProtectedRoute from '@/components/ProtectedRoute';
-import LazyRoute from '@/components/LazyRoute';
-import mainLoader from '@/containers/Main/loader';
-import authLoader from '@/containers/Auth/loader';
+import SessionStore, { ISessionStore } from '@/stores/SessionStore';
+import DevTools from './components/DevTools';
+import ProtectedRoute from './components/ProtectedRoute';
+import LazyRoute from './components/LazyRoute';
+import appLoader from './layout/App';
+import authLoader from './layout/Auth';
 
 useStrict(true);
 
 export default class Root extends Component {
-  private authStore: IAuthStore;
+  private session: ISessionStore;
 
   constructor(props: any) {
     super(props);
-    this.authStore = new AuthStore();
+    this.session = new SessionStore();
   }
 
   public render(): ReactNode {
     return (
       <>
-        <Provider authStore={this.authStore}>
+        <Provider sessionStore={this.session}>
           <Router>
             <Switch>
-              <LazyRoute exact strict path="/auth/login" loader={authLoader} />
+              <LazyRoute exact strict path="/auth" loader={authLoader} />
               <ProtectedRoute
                 exact
                 strict
                 path="/"
-                authStore={this.authStore}
-                loader={mainLoader}
+                session={this.session}
+                loader={appLoader}
               />
             </Switch>
           </Router>

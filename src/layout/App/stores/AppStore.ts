@@ -14,12 +14,54 @@
  *    limitations under the License.
  */
 
+import { ReactNode } from 'react';
 import { action, observable } from 'mobx';
 import { ICommonStore, ICommonStoreAction } from '@/types';
 import { setter, toggle } from '@/utils/decorators';
-import { IBreadcrumb, IMenu } from './models';
+// import { IBreadcrumb, IMenu } from './models';
 
-export interface IMainStore extends ICommonStore {
+/**
+ * Breadcrumb type.
+ *
+ * @author Panjie SW <panjie@panjiesw.com>
+ * @export
+ * @interface IBreadcrumb
+ */
+export interface IBreadcrumb {
+  /**
+   * CSS class name for this breadcrumb item
+   */
+  className?: string;
+  /**
+   * The icon to display alongside the label
+   *
+   */
+  icon?: string;
+  id: string;
+  /**
+   * The label of this breadcrumb item. It can be a react component/element
+   *
+   */
+  label: ReactNode;
+  /**
+   * The location to navigate when this item is clicked.
+   * Pass an empty string to render it as un-navigable item.
+   */
+  to: string | Location;
+}
+
+export interface IMenu {
+  children?: IMenu[];
+  className?: string;
+  exact?: boolean;
+  group?: boolean;
+  icon?: string;
+  id: string;
+  label: ReactNode;
+  to: string | Location;
+}
+
+export interface IAppStore extends ICommonStore {
   readonly breadcrumb: IBreadcrumb[];
   readonly sidebar: IMenu[];
   readonly topbar: IMenu[];
@@ -32,7 +74,7 @@ export interface IMainStore extends ICommonStore {
   subdomain(): string;
 }
 
-class MainStore implements IMainStore {
+class AppStore implements IAppStore {
   @setter('loadingStart', true)
   @setter('loadingStop', false)
   @observable
@@ -84,7 +126,7 @@ class MainStore implements IMainStore {
   }
 }
 
-interface MainStore extends IMainStore, ICommonStoreAction {
+interface AppStore extends IAppStore, ICommonStoreAction {
   setBreadcrumb(breadcrumbs: IBreadcrumb[]): void;
   setSidebar(sidebar: IMenu[]): void;
   setTopbar(topbar: IMenu[]): void;
@@ -93,4 +135,4 @@ interface MainStore extends IMainStore, ICommonStoreAction {
   sidebarCollapse(): void;
 }
 
-export default MainStore;
+export default AppStore;

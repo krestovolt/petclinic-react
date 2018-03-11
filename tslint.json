@@ -14,7 +14,7 @@
     ],
     "ordered-imports": [false],
     "object-literal-sort-keys": false,
-    "no-submodule-imports": [true, "@", "antd"],
+    "no-submodule-imports": [true, "@", "antd", "lodash"],
     "no-implicit-dependencies": false,
     "jsx-no-multiline-js": [false],
     "jsx-boolean-value": [false],

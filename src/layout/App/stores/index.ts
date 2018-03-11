@@ -14,21 +14,4 @@
  *    limitations under the License.
  */
 
-import { Frest } from 'frest';
-import { ISession } from '@/types';
-
-export default class UserApi {
-  constructor(private frest: Frest) {}
-
-  public me = async () => {
-    const res = await this.frest.get<ISession>(this.path('me'));
-    if (res.origin.ok && res.body) {
-      return res.body;
-    }
-    throw new Error('Invalid response');
-  };
-
-  private path(sub: string = '') {
-    return ['users', sub];
-  }
-}
+export { IAppStore, IBreadcrumb, IMenu, default as AppStore } from './AppStore';

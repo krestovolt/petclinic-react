@@ -17,25 +17,33 @@
 import { IResponse } from 'frest';
 import { action, observable } from 'mobx';
 import * as a from '@/api';
-import { ICommonStore, ICommonStoreAction } from '@/types';
+import * as t from '@/types';
+import { subdomain } from '@/utils';
 
-export interface IAuthStore extends ICommonStore, ICommonStoreAction {
+export interface ISessionStore extends t.ICommonStore, t.ICommonStoreAction {
   readonly authenticated: boolean;
-  readonly session: a.ILoginResponse | null;
-  loadSession(): Promise<a.ILoginResponse>;
-  login(payload: a.ILoginPayload): Promise<a.ILoginResponse>;
+  readonly current: t.ISession;
+  load(): Promise<t.ISession>;
+  login(payload: a.ILoginPayload): Promise<t.ISession>;
   logout(): Promise<void>;
   addOnLogoutListener(listener: OnLogoutListener): void;
+  roleAuthorized(role: string): boolean;
 }
 
 export type OnLogoutListener = (res: IResponse<{}>) => void;
 
-export class AuthStore implements IAuthStore {
+export default class SessionStore implements ISessionStore {
+  public static DEFAULT_SESSION: t.ISession = {
+    id: -1,
+    email: '',
+    role: '',
+  };
+
   @observable public loading: boolean = false;
 
   @observable public authenticated = false;
 
-  @observable public session: a.ILoginResponse | null = null;
+  @observable public current: t.ISession = { ...SessionStore.DEFAULT_SESSION };
 
   private listeners: OnLogoutListener[] = [];
 
@@ -54,7 +62,7 @@ export class AuthStore implements IAuthStore {
     this.loading = false;
   };
 
-  public loadSession = async () => {
+  public load = async () => {
     console.info('AuthStore#loadSession');
     this.loadingStart();
     try {
@@ -94,20 +102,31 @@ export class AuthStore implements IAuthStore {
     this.listeners.push(listener);
   }
 
+  public roleAuthorized(role: string): boolean {
+    if (this.current && this.authenticated) {
+      const authorized = this.current.role === `ROLE_${role.toUpperCase()}`;
+      if (process.env.NODE_ENV === 'production') {
+        return authorized && subdomain() === role;
+      }
+      return authorized;
+    }
+    return false;
+  }
+
   @action
   private setAuthenticated(val: boolean = true) {
     this.authenticated = val;
   }
 
   @action
-  private setSession(session: a.ILoginResponse | null) {
-    this.session = session;
+  private setSession(session: t.ISession) {
+    this.current = session;
   }
 
   @action
   private doLogout() {
     this.listeners = [];
-    this.setSession(null);
+    this.setSession({ ...SessionStore.DEFAULT_SESSION });
     this.setAuthenticated(false);
   }
 }

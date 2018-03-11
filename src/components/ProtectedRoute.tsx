@@ -16,7 +16,7 @@
 
 import React from 'react';
 import { Redirect, withRouter } from 'react-router-dom';
-import { IAuthStore } from '@/stores/auth';
+import { ISessionStore } from '@/stores/SessionStore';
 import LazyRoute, { LazyRouteProps } from './LazyRoute';
 
 const RedirectLogin: any = withRouter((props: any) => {
@@ -28,18 +28,17 @@ const RedirectLogin: any = withRouter((props: any) => {
 });
 
 export interface ProtectedRouteProps extends LazyRouteProps {
-  authStore: IAuthStore;
+  session: ISessionStore;
 }
 
 export default class ProtectedRoute extends LazyRoute<ProtectedRouteProps> {
   constructor(props: ProtectedRouteProps, context?: any) {
     super(props, context, () => {
-      console.info('ProtectedRoute - loading protected component')
-      return props.authStore
-      .loadSession()
-      .then(_ => props.loader(props.authStore))
-      .catch(_ => RedirectLogin)
-    },
-    );
+      console.info('ProtectedRoute - loading protected component');
+      return props.session
+        .load()
+        .then(_ => props.loader(props.session))
+        .catch(_ => RedirectLogin);
+    });
   }
 }

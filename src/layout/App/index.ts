@@ -15,17 +15,19 @@
  */
 
 import { RouteComponentProps } from 'react-router-dom';
-import { ClickParam } from 'antd/lib/menu';
-import { ILoginResponse } from '@/api/auth';
-import {IAuthStore} from '@/stores/auth';
-import MainStore from '../store';
+import { Module } from 'react-universal-component';
+import { ISessionStore } from '@/stores';
 
-export interface IMainLayoutProps extends RouteComponentProps<any> {
-  uiStore: MainStore;
-  authStore: IAuthStore;
-}
-
-export interface ILayoutProps extends IMainLayoutProps {
-  session: ILoginResponse;
-  onMenuClick: (ev: ClickParam) => any;
+export default function appLoader(
+  sessionStore: ISessionStore,
+): Promise<Module<RouteComponentProps<any>>> {
+  console.info('loader - loading Layout component');
+  if (sessionStore.roleAuthorized('admin')) {
+    console.info('loader - loading Admin component');
+    return import('./Admin').then(r => {
+      console.info('loader - loaded Admin component');
+      return r;
+    });
+  }
+  return Promise.reject('Not logged in');
 }

@@ -15,10 +15,25 @@
  */
 
 import React, { Component, ReactNode } from 'react';
-import { RouteComponentProps } from 'react-router-dom';
+import { /* Route,  */RouteComponentProps } from 'react-router-dom';
+import { inject, observer } from 'mobx-react';
+import { Row, Col } from 'antd';
+import { ISessionStore } from '@/stores/SessionStore';
 
-export default class Auth extends Component<RouteComponentProps<any>> {
+export interface AuthProps extends RouteComponentProps<any> {
+  session: ISessionStore;
+}
+
+export class Auth extends Component<AuthProps> {
   public render(): ReactNode {
-    return <h1>Auth</h1>;
+    return (
+      <Row className="pc-auth" type="flex" justify="center" align="middle">
+        <Col className="pc-auth-box" xs={24} sm={16} md={12} lg={10}>
+          <h1>Hello</h1>
+        </Col>
+      </Row>
+    );
   }
 }
+
+export default inject('session')(observer(Auth));

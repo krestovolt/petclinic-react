@@ -14,31 +14,28 @@
  *    limitations under the License.
  */
 
-import { Frest } from 'frest';
-import { ISession } from '@/types';
+import { DescriptorObject, DescriptorFnObject } from 'async-validator';
 
-export interface ILoginPayload {
-  email: string;
-  password: string;
-  remember?: boolean;
+const isTargetCheckbox = (inp: EventTarget): inp is HTMLInputElement => {
+  return (inp as HTMLInputElement).type === 'checkbox';
+};
+
+export function getValueFromEvent(e?: any) {
+  if (!e || !e.target) {
+    return e;
+  }
+  const { target } = e;
+  return isTargetCheckbox(target) ? target.checked : target.value;
 }
 
-export default class AuthApi {
-  constructor(private frest: Frest) {}
-
-  public login = async (body: ILoginPayload) => {
-    const res = await this.frest.post<ISession>(this.path('login'), {
-      body,
-    });
-    if (res.origin.ok && res.body) {
-      return res.body;
+export function checkIsRequired(
+  rules?: DescriptorObject | Array<DescriptorFnObject & DescriptorObject>,
+) {
+  if (rules) {
+    if (Array.isArray(rules)) {
+      return rules.filter(({ required }) => required).length > 0;
     }
-    throw new Error('Invalid response');
-  };
-
-  public logout = () => this.frest.post<{}>(this.path('logout'));
-
-  private path(sub: string = '') {
-    return ['auth', sub];
+    return !!rules.required;
   }
+  return false;
 }

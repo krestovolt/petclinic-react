@@ -35,5 +35,5 @@ export const withMock = (fetchFn: typeof fetch) => {
   frest.mergeConfig({ fetch: fetchFn });
 };
 
-export { ILoginPayload, ILoginResponse } from './auth';
+export { ILoginPayload } from './auth';
 export { AuthApi, UserApi };

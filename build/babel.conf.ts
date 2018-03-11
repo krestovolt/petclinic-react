@@ -30,7 +30,7 @@ if (isProd()) {
     ...presets[0][1],
     ...config.build.babel.envOptions,
   };
-  // plugins.push(['transform-remove-console', { exclude: ['error', 'warn'] }]);
+  plugins.push(['transform-remove-console', { exclude: ['error', 'warn'] }]);
 } else {
   plugins.push('react-hot-loader/babel');
 }

@@ -14,40 +14,40 @@
  *    limitations under the License.
  */
 
-import React, { Component, ReactNode } from 'react';
-import { observer } from 'mobx-react';
+import React, { ReactNode } from 'react';
+import { inject, observer } from 'mobx-react';
 import { Layout } from 'antd';
-import TopBar from '../components/TopBar';
-import { ILayoutProps } from './props';
+import TopBar from './components/TopBar';
+import App from './App';
 
 const { Sider, Content } = Layout;
 
-class Admin extends Component<ILayoutProps> {
+class Admin extends App {
   public componentDidMount() {
-    this.props.uiStore.setTitle('Admin');
+    // this.props.app.setTitle('Admin');
   }
 
   public render(): ReactNode {
-    const { uiStore, session, onMenuClick } = this.props;
+    const { session, onMenuClick } = this.props;
     return (
-      <>
-        <Sider trigger={null} collapsible className="pc-sider" >
+      <Layout className="pc-main">
+        <Sider trigger={null} collapsible className="pc-sider">
           <div className="logo" />
         </Sider>
         <Layout>
           <TopBar
-            menu={uiStore.topbar}
-            sidebarCollapsed={uiStore.sidebarCollapsed}
-            session={session}
-            sidebarToggle={uiStore.sidebarToggle.bind(uiStore)}
+            menu={this.app.topbar}
+            sidebarCollapsed={this.app.sidebarCollapsed}
+            session={session.current}
+            sidebarToggle={this.app.sidebarToggle.bind(this.app)}
             onMenuClick={onMenuClick}
           />
           <Content />
         </Layout>
-      </>
+      </Layout>
     );
   }
 }
 
 export { Admin };
-export default observer(Admin);
+export default inject('session')(observer(Admin));

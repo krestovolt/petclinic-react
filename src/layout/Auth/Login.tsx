@@ -14,5 +14,10 @@
  *    limitations under the License.
  */
 
-export * from './breadcrumb';
-export * from './menu';
+import React, { Component, ReactNode } from 'react';
+import { RouteComponentProps } from 'react-router-dom';
+import { ISessionStore } from '@/stores/SessionStore';
+
+export interface LoginProps extends RouteComponentProps<any> {
+  session: ISessionStore;
+}

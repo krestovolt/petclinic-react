@@ -31,3 +31,11 @@ export interface ICommonStoreAction {
   loadingStart(): void;
   loadingStop(): void;
 }
+
+export interface ISession {
+  id: number;
+  email: string;
+  role: string;
+  firstName?: string;
+  lastName?: string;
+}

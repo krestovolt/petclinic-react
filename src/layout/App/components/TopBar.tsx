@@ -18,8 +18,8 @@ import React, { SFC } from 'react';
 import { observer } from 'mobx-react';
 import { Layout, Menu, Icon } from 'antd';
 import { ClickParam } from 'antd/lib/menu';
-import { ILoginResponse } from '@/api';
-import { IMenu } from '../models';
+import { ISession } from '@/types';
+import { IMenu } from '../stores';
 import { renderMenu } from '../utils';
 
 const { Header } = Layout;
@@ -27,7 +27,7 @@ const { Header } = Layout;
 export interface TopBarProps {
   menu: IMenu[];
   sidebarCollapsed: boolean;
-  session: ILoginResponse;
+  session: ISession;
   sidebarToggle: () => any;
   onMenuClick: (param: ClickParam) => any;
 }
