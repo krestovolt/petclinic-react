@@ -17,9 +17,7 @@ export default {
       inject: false,
       template: htmlWebpackTemplate,
       appMountId: 'app',
-      links: [
-        '/static/global.css'
-      ]
+      links: ['/static/css/global.css'],
     },
   },
 
@@ -53,6 +51,19 @@ export default {
       envOptions: {
         targets: { browsers: ['defaults', 'safari >= 8'] },
       },
+    },
+
+    html: {
+      minify: {
+        removeComments: true,
+        collapseWhitespace: true,
+        removeAttributeQuotes: true,
+        // more options:
+        // https://github.com/kangax/html-minifier#options-quick-reference
+      },
+      // necessary to consistently work with multiple chunks
+      // via CommonsChunkPlugin
+      chunksSortMode: 'dependency' as 'dependency',
     },
 
     productionSourceMap: true,

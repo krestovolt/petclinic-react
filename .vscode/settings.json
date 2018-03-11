@@ -23,5 +23,6 @@
   "tslint.ignoreDefinitionFiles": true,
   "tslint.jsEnable": true,
   "typescript.tsdk": "./node_modules/typescript/lib",
-  "xo.enable": false
+  "xo.enable": false,
+  "liveServer.settings.root": "/dist"
 }

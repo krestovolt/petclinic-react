@@ -12,15 +12,25 @@ const render = () => {
   );
 };
 
-if (process.env.MOCK) {
-  import('./mock')
-    .then(m => {
-      console.info('loaded mock module', m);
-      const fm = m.mock();
-      // return import('./api').then(a => a.withMock(fm));
-      return fm;
-    })
-    .then(render);
+if (process.env.NODE_ENV !== 'production' && process.env.MOCK) {
+  // This is only fixed in webpack 4
+  // In webpack 3 it errors
+  // import' and 'export' may only appear at the top level
+
+  // import('./mock')
+  //   .then(m => {
+  //     console.info('loaded mock module', m);
+  //     const fm = m.mock();
+  //     // return import('./api').then(a => a.withMock(fm));
+  //     return fm;
+  //   })
+  //   .then(render);
+
+  // temporary solution
+  // tslint:disable-next-line:no-var-requires
+  const m = require('./mock');
+  m.mock();
+  render();
 } else {
   render();
 }
