@@ -20,8 +20,9 @@ import React, {
   ReactNode,
   ChildContextProvider,
   ClassAttributes,
+  ValidationMap,
 } from 'react';
-import { getValueFromEvent } from './utils';
+import PropTypes from 'prop-types';
 import { toJS, extendObservable, action, runInAction, observable } from 'mobx';
 import AsyncValidator, {
   Descriptor,
@@ -33,6 +34,7 @@ import AsyncValidator, {
 import set from 'lodash/set';
 import get from 'lodash/get';
 import has from 'lodash/has';
+import { getValueFromEvent } from './utils';
 import * as t from './types';
 
 const DEFAULT_VALIDATE_TRIGGER = 'onChange';
@@ -59,6 +61,12 @@ export function createForm<
     class WrapForm extends Component<
       Omit<P, keyof t.FormHOCProps> & t.FormHOCPropsExtra<S>
     > implements t.WrappedForm<S>, ChildContextProvider<FormContext> {
+      public static childContextTypes: ValidationMap<any> = {
+        form: PropTypes.object,
+        defaultItemProps: PropTypes.object,
+        displayDefaultLabel: PropTypes.bool,
+      };
+
       private store: t.FormStore = {};
       private errors = observable.map<ValidationError[]>();
       private fieldOptions: t.FieldOptions = {};
@@ -194,7 +202,7 @@ export function createForm<
 
       private setField = (path: string, value: any) => {
         const store = this.getStore();
-        return runInAction(() =>
+        return runInAction('setField', () =>
           set(store, prefix ? `${prefix}.${path}` : path, value),
         );
       };

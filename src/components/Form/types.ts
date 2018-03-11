@@ -33,9 +33,7 @@ export interface FieldOptions {
 }
 
 export interface FormStore {
-  readonly __options?: {
-    [key: string]: FieldOption;
-  };
+  readonly __options?: FieldOptions;
 }
 
 export interface CreateFormOption<S extends FormStore = FormStore> {
@@ -55,7 +53,7 @@ export interface FormHOCPropsExtra<S extends FormStore = FormStore> {
 }
 
 export interface WrappedForm<S extends FormStore = FormStore> {
-  validateFields(callback?: (fields: any) => any): Promise<any>;
+  validateFields<R = any>(callback?: (fields: any) => any): Promise<R>;
   getFieldError(name: string): any;
   getFieldsError(): any;
   getStore(): S;

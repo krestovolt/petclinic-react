@@ -14,15 +14,20 @@
  *    limitations under the License.
  */
 
-import { RouteComponentProps } from 'react-router-dom';
-import { Module } from 'react-universal-component';
+import React, { SFC } from 'react';
+import { Spin } from 'antd';
 
-export default function authLoader(): Promise<
-  Module<RouteComponentProps<any>>
-> {
-  console.info('loader - loading Auth component');
-  return import('./Auth').then(r => {
-    console.info('loader - loaded Auth component');
-    return r;
-  });
+export interface ILoadingProps {
+  spinning: boolean;
+  tip?: string;
 }
+
+const Loading: SFC<ILoadingProps> = props => {
+  return (
+    <Spin spinning={props.spinning} tip={props.tip || 'Loading...'}>
+      {props.children}
+    </Spin>
+  );
+};
+
+export default Loading;

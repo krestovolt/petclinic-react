@@ -24,7 +24,11 @@ export interface ILoginPayload {
 }
 
 export default class AuthApi {
-  constructor(private frest: Frest) {}
+  private frest: Frest;
+
+  constructor(frest: Frest) {
+    this.frest = frest;
+  }
 
   public login = async (body: ILoginPayload) => {
     const res = await this.frest.post<ISession>(this.path('login'), {

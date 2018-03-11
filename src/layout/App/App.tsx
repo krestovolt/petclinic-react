@@ -36,10 +36,10 @@ export default abstract class App<
     super(props, context);
     this.app = new AppStore();
     this.app.setRootBreadcrumb({
-      label: 'Home',
+      label: 'Dashboard',
       to: '',
       icon: 'home',
-      id: 'home',
+      id: 'dashboard',
     });
     this.app.setTopbar([
       {

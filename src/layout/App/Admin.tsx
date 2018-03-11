@@ -15,6 +15,7 @@
  */
 
 import React, { ReactNode } from 'react';
+import { hot } from 'react-hot-loader';
 import { inject, observer } from 'mobx-react';
 import { Layout } from 'antd';
 import TopBar from './components/TopBar';
@@ -50,4 +51,4 @@ class Admin extends App {
 }
 
 export { Admin };
-export default inject('session')(observer(Admin));
+export default hot(module)(inject('session')(observer(Admin)));

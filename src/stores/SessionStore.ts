@@ -47,10 +47,16 @@ export default class SessionStore implements ISessionStore {
 
   private listeners: OnLogoutListener[] = [];
 
+  private api: a.AuthApi;
+  private user: a.UserApi;
+
   constructor(
-    private api: a.AuthApi = a.auth,
-    private user: a.UserApi = a.user,
-  ) {}
+    api: a.AuthApi = a.auth,
+    user: a.UserApi = a.user,
+  ) {
+    this.api = api;
+    this.user = user;
+  }
 
   @action
   public loadingStart = () => {

@@ -17,7 +17,7 @@
 import React, { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import { Icon, Breadcrumb } from 'antd';
-import { IBreadcrumb } from '../models';
+import { IBreadcrumb } from '../stores';
 
 const renderBreadcrumb = (item: IBreadcrumb): ReactNode => {
   let title: ReactNode = item.label;

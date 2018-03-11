@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
-import Root from './Root';
+import Root from './layout/Root';
 
 const render = () => {
   ReactDOM.render(
@@ -26,5 +26,5 @@ if (process.env.MOCK) {
 }
 
 if ((module as any).hot) {
-  (module as any).hot.accept('./containers/Root', render);
+  (module as any).hot.accept('./layout/Root', render);
 }

@@ -14,8 +14,8 @@
  *    limitations under the License.
  */
 
-export const BASE = '/api';
-export const LOGIN = `${BASE}/login`;
-export const LOGOUT = `${BASE}/logout`;
+export const BASE = 'api';
+export const LOGIN = `${BASE}/auth/login`;
+export const LOGOUT = `${BASE}/auth/logout`;
 export const ROLE = `${BASE}/roles`;
 export const USER = `${BASE}/users`;

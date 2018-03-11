@@ -17,7 +17,7 @@
 import React, { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import { Icon, Menu } from 'antd';
-import { IMenu } from '../models';
+import { IMenu } from '../stores';
 
 const renderMenu = (item: IMenu): ReactNode => {
   let title: ReactNode = item.label;

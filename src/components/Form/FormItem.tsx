@@ -15,6 +15,7 @@
  */
 
 import React, { Children, Component, ReactNode } from 'react';
+import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import { Form } from 'antd';
 import { FormItemProps } from 'antd/es/form';
@@ -25,6 +26,12 @@ import { checkIsRequired } from './utils';
 export default class FormItem extends Component<
   FormItemProps & { disabledValidate?: boolean }
 > {
+  public static contextTypes = {
+    form: PropTypes.object, // the form object
+    defaultItemProps: PropTypes.object, // global default FormItem props
+    displayDefaultLabel: PropTypes.bool, // display the default label if not set
+  };
+
   public render(): ReactNode {
     let fieldOption: t.FieldOption | null = null;
     const children = Children.toArray(this.props.children);
