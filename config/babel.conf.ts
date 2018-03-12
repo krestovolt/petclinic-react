@@ -1,4 +1,4 @@
-import config from '../config';
+import config from './index';
 import { isProd } from './utils';
 
 const presets: any[] = [

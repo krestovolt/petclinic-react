@@ -1,5 +1,5 @@
 import path from 'path';
-import config from '../config';
+import config from './index';
 
 export const resolve = (dir: string = '') => path.resolve(__dirname, '..', dir);
 

@@ -27,8 +27,8 @@ import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import config from '../config';
 import prodEnv from '../config/prod.env';
 import testingEnv from '../config/test.env';
-import { assetsPath, resolve } from './utils';
-import style from './style.conf';
+import { assetsPath, resolve } from '../config/utils';
+import style from '../config/style.conf';
 import baseWebpackConfig from './webpack.base.conf';
 
 const env = process.env.NODE_ENV === 'testing' ? testingEnv : prodEnv;
@@ -124,8 +124,15 @@ const webpackConfig = merge(baseWebpackConfig, {
       },
     ]),
 
-    new BundleAnalyzerPlugin(),
+    // new BundleAnalyzerPlugin(),
   ],
 });
 
-export default webpackConfig;
+export default (e: any = {}) => {
+  // To include BundleAnalyzerPlugin, run with --env.a argument
+  // yarn build --env.a
+  if (e.a) {
+    webpackConfig.plugins.push(new BundleAnalyzerPlugin());
+  }
+  return webpackConfig;
+};

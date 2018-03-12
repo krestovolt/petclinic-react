@@ -23,8 +23,8 @@ import FriendlyErrorsPlugin from 'friendly-errors-webpack-plugin';
 import portfinder from 'portfinder';
 import config from '../config';
 import devEnv from '../config/dev.env';
-import { resolve, isProd } from './utils';
-import style from './style.conf';
+import { resolve, isProd } from '../config/utils';
+import style from '../config/style.conf';
 import baseWebpackConfig from './webpack.base.conf';
 
 const HOST = process.env.HOST;

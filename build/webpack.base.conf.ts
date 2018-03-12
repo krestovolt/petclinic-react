@@ -1,7 +1,7 @@
 import webpack from 'webpack';
 import config from '../config';
-import babelOptions from './babel.conf';
-import { resolve, assetsPath } from './utils';
+import babelOptions from '../config/babel.conf';
+import { resolve, assetsPath } from '../config/utils';
 
 const base: webpack.Configuration = {
   context: resolve(),
