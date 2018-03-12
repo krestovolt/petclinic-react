@@ -1,6 +1,6 @@
 import path from 'path';
 import htmlWebpackTemplate from 'html-webpack-template';
-import { resolve } from '../build/utils';
+import { resolve } from './utils';
 
 export default {
   common: {
@@ -18,6 +18,16 @@ export default {
       template: htmlWebpackTemplate,
       appMountId: 'app',
       links: ['/static/css/global.css'],
+      scripts: ['/static/js/spinner.js'],
+      bodyHtmlSnippet: `
+<div id="loading-full" class="pc-loading-full-container">
+  <div class="pc-loading-full">
+    <div class="pc-cube1 pc-cube"></div>
+    <div class="pc-cube2 pc-cube"></div>
+    <div class="pc-cube4 pc-cube"></div>
+    <div class="pc-cube3 pc-cube"></div>
+  </div>
+</div>`,
     },
   },
 

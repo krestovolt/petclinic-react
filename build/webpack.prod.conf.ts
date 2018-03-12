@@ -13,6 +13,8 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
+// tslint:disable-next-line:no-reference
+/// <reference path="../typings/uglifyjs-webpack-plugin.d.ts" />
 
 import path from 'path';
 import webpack from 'webpack';

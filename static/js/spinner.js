@@ -14,18 +14,10 @@
  *    limitations under the License.
  */
 
-import { RouteComponentProps } from 'react-router-dom';
-import { Module } from 'react-universal-component';
+window.$fullLoadingShow = function() {
+  document.getElementById('loading-full').classList.remove('hidden');
+}
 
-export default function authLoader(): Promise<
-  Module<RouteComponentProps<any>>
-> {
-  console.info('loader - loading Auth component');
-  $fullLoadingShow();
-  return import('./Auth')
-    .then(r => {
-      console.info('loader - loaded Auth component');
-      return r;
-    })
-    .finally($fullLoadingHide);
+window.$fullLoadingHide = function() {
+  document.getElementById('loading-full').classList.add('hidden');
 }

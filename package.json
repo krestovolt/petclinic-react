@@ -23,8 +23,8 @@
   "homepage": "https://github.com/panjiesw/petclinic-react#readme",
   "scripts": {
     "cm": "git-cz",
-    "build": "cross-env TS_NODE_PROJECT=./build/tsconfig.webpack.json NODE_ENV=production webpack --progress --config build/webpack.prod.conf.ts",
-    "dev": "cross-env TS_NODE_PROJECT=./build/tsconfig.webpack.json webpack-dev-server --progress --config build/webpack.dev.conf.ts",
+    "build": "cross-env TS_NODE_PROJECT=./config/tsconfig.webpack.json NODE_ENV=production webpack --progress --config build/webpack.prod.conf.ts",
+    "dev": "cross-env TS_NODE_PROJECT=./config/tsconfig.webpack.json webpack-dev-server --progress --config build/webpack.dev.conf.ts",
     "dev:mock": "cross-env MOCK=\"1\" yarn dev",
     "dev:mock:watch": "nodemon --watch build --watch config -e js,json,ts --exec \"yarn dev:mock\"",
     "dev:watch": "nodemon --watch build --watch config -e js,json,ts --exec \"yarn dev\"",
