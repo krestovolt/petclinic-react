@@ -15,21 +15,22 @@
  */
 
 import fetchMock from 'fetch-mock';
+import { ROLE_ADMIN, ROLE_OWNER, ROLE_VET } from '@/stores';
 import * as path from './path';
 import { jsonRes } from './utils';
 
 export const roles = [
   {
     id: 1,
-    name: 'ROLE_ADMIN',
+    name: ROLE_ADMIN,
   },
   {
     id: 2,
-    name: 'ROLE_VET',
+    name: ROLE_VET,
   },
   {
     id: 3,
-    name: 'ROLE_OWNER',
+    name: ROLE_OWNER,
   },
 ];
 

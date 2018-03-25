@@ -1,5 +1,5 @@
 import path from 'path';
-import htmlWebpackTemplate from 'html-webpack-template';
+// import htmlWebpackTemplate from 'html-webpack-template';
 import { resolve } from './utils';
 
 export default {
@@ -15,10 +15,16 @@ export default {
     html: {
       title: 'Pet Clinic',
       inject: false,
-      template: htmlWebpackTemplate,
+      template: './config/template.ejs',
       appMountId: 'app',
       links: ['/static/css/global.css'],
-      scripts: ['/static/js/spinner.js'],
+      scripts: [
+        {
+          src: '/static/js/spinner.js',
+          type: 'text/javascript',
+          async: true,
+        },
+      ],
       bodyHtmlSnippet: `
 <div id="loading-full" class="pc-loading-full-container">
   <div class="pc-loading-full">

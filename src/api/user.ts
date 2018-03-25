@@ -18,7 +18,11 @@ import { Frest } from 'frest';
 import { ISession } from '@/types';
 
 export default class UserApi {
-  constructor(private frest: Frest) {}
+  private frest: Frest;
+
+  constructor(frest: Frest) {
+    this.frest = frest;
+  }
 
   public me = async () => {
     const res = await this.frest.get<ISession>(this.path('me'));

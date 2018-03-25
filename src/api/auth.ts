@@ -16,6 +16,7 @@
 
 import { Frest } from 'frest';
 import { ISession } from '@/types';
+import { subdomain } from '@/utils';
 
 export interface ILoginPayload {
   email: string;
@@ -31,9 +32,13 @@ export default class AuthApi {
   }
 
   public login = async (body: ILoginPayload) => {
-    const res = await this.frest.post<ISession>(this.path('login'), {
-      body,
-    });
+    const sub = subdomain();
+    const res = await this.frest.post<ISession>(
+      this.path('login', sub === '' ? 'owner' : sub),
+      {
+        body,
+      },
+    );
     if (res.origin.ok && res.body) {
       return res.body;
     }
@@ -42,7 +47,7 @@ export default class AuthApi {
 
   public logout = () => this.frest.post<{}>(this.path('logout'));
 
-  private path(sub: string = '') {
-    return ['auth', sub];
+  private path(sub: string = '', ...rest: string[]) {
+    return ['auth', sub, ...rest];
   }
 }

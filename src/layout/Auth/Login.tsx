@@ -15,7 +15,7 @@
  */
 
 import React, { Component, ReactNode, FormEventHandler } from 'react';
-import { RouteComponentProps } from 'react-router-dom';
+import { RouteComponentProps, Link } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
 import { Button, Form, Icon, Input } from 'antd';
 import { ILoginPayload } from '@/api';
@@ -44,32 +44,44 @@ export class Login extends Component<LoginProps> {
           {/* <FormItem className="pc-auth-form-title">
 
           </FormItem> */}
-          <FormItem className="pc-auth-form-item" label="Email" hasFeedback>
-            <Input
-              prefix={<Icon type="user" style={{ fontSize: 16 }} />}
-              placeholder="Email"
-              type="email"
-              {...getFieldProps('email')}
-            />
-          </FormItem>
-          <FormItem className="pc-auth-form-item" label="Password" hasFeedback>
-            <Input
-              prefix={<Icon type="lock" style={{ fontSize: 16 }} />}
-              placeholder="Password"
-              type="password"
-              {...getFieldProps('password')}
-            />
-          </FormItem>
-          <FormItem className="pc-auth-action-button">
-            <Button
-              className="pc-auth-form-button"
-              type="primary"
-              htmlType="submit"
-              disabled={session.loading}
+          <div className="pc-auth-content">
+            <FormItem className="pc-auth-form-subtitle">
+              <h3>Login</h3>
+            </FormItem>
+            <FormItem className="pc-auth-form-item" label="Email" hasFeedback>
+              <Input
+                prefix={<Icon type="user" style={{ fontSize: 16 }} />}
+                placeholder="Email"
+                type="email"
+                {...getFieldProps('email')}
+              />
+            </FormItem>
+            <FormItem
+              className="pc-auth-form-item"
+              label="Password"
+              hasFeedback
             >
-              Login
-            </Button>
-          </FormItem>
+              <Input
+                prefix={<Icon type="lock" style={{ fontSize: 16 }} />}
+                placeholder="Password"
+                type="password"
+                {...getFieldProps('password')}
+              />
+            </FormItem>
+            <FormItem className="pc-auth-action-button">
+              <Link className="pc-login-form-forgot" to="/auth/forgot">
+                Forgot Password?
+              </Link>
+              <Button
+                className="pc-auth-form-button"
+                type="primary"
+                htmlType="submit"
+                disabled={session.loading}
+              >
+                Login
+              </Button>
+            </FormItem>
+          </div>
         </Form>
       </Loading>
     );
@@ -77,11 +89,12 @@ export class Login extends Component<LoginProps> {
 
   private handleSubmit: FormEventHandler<any> = async e => {
     e.preventDefault();
-    const { form, session } = this.props;
+    const { form, session, history } = this.props;
     const result = await form.validateFields<ILoginPayload>(fields =>
       console.log('error', fields),
     );
-    session.login(result);
+    await session.login(result);
+    history.replace('/');
   };
 }
 

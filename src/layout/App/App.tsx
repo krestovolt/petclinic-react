@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-import { Component } from 'react';
+import React, { Component } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import { ClickParam } from 'antd/lib/menu';
 import { ISessionStore } from '@/stores/SessionStore';

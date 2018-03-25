@@ -38,7 +38,13 @@ export default class ProtectedRoute extends LazyRoute<ProtectedRouteProps> {
       return props.session
         .load()
         .then(_ => props.loader(props.session))
-        .catch(_ => RedirectLogin);
+        .catch(err => {
+          console.log(
+            'ProtectedRoute - failed loading session or component',
+            err,
+          );
+          return RedirectLogin;
+        });
     });
   }
 }

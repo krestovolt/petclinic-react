@@ -58,7 +58,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     host: HOST || config.dev.server.host,
     port: PORT || config.dev.server.port,
     open: config.dev.server.autoOpenBrowser,
-    quiet: true, // necessary for FriendlyErrorsPlugin
+    // quiet: true, // necessary for FriendlyErrorsPlugin
     overlay: config.dev.server.errorOverlay
       ? { warnings: false, errors: true }
       : false,
@@ -99,18 +99,18 @@ export default new Promise((res, rej) => {
       // add port to devServer config
       devWebpackConfig.devServer.port = port;
       // devWebpackConfig.plugins.push(new DashboardPlugin());
-      devWebpackConfig.plugins.push(
-        new FriendlyErrorsPlugin({
-          compilationSuccessInfo: {
-            messages: [
-              `Your application is running at: http://${
-                devWebpackConfig.devServer.host
-              }:${devWebpackConfig.devServer.port}`,
-            ],
-            notes: [],
-          },
-        }),
-      );
+      // devWebpackConfig.plugins.push(
+      //   new FriendlyErrorsPlugin({
+      //     compilationSuccessInfo: {
+      //       messages: [
+      //         `Your application is running at: http://${
+      //           devWebpackConfig.devServer.host
+      //         }:${devWebpackConfig.devServer.port}`,
+      //       ],
+      //       notes: [],
+      //     },
+      //   }),
+      // );
 
       res(devWebpackConfig);
     }

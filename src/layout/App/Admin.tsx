@@ -52,3 +52,4 @@ class Admin extends App {
 
 export { Admin };
 export default hot(module)(inject('session')(observer(Admin)));
+// export default inject('session')(observer(Admin));

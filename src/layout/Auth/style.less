@@ -21,4 +21,26 @@
   .pc-auth-box {
     padding: 50px;
   }
+
+  .pc-auth-form {
+    .pc-auth-content {
+      padding: 24px;
+      border: 1px solid black;
+
+      .pc-auth-action-button {
+        text-align: right;
+        margin: 0;
+
+        .pc-login-form-forgot {
+          float: left;
+        }
+
+        .pc-auth-form-button {
+          &:not(:last-child) {
+            margin-right: 8px;
+          }
+        }
+      }
+    }
+  }
 }
