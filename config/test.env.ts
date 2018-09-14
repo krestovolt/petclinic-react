@@ -1,6 +1,6 @@
 import prod from './prod.env';
 
 export default {
-  ...prod,
-  NODE_ENV: '"testing"',
+	...prod,
+	NODE_ENV: '"testing"',
 };

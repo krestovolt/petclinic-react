@@ -18,27 +18,27 @@ import autoprefixer from 'autoprefixer';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 
 const style = (vars: any = {}) => {
-  const fallback = 'style-loader';
-  const use = [
-    { loader: 'css-loader', options: { modules: false, importLoaders: 2 } },
-    { loader: 'postcss-loader', options: { plugins: () => autoprefixer() } },
-    { loader: 'less-loader' },
-  ];
-  const test = /.less$/;
+	const fallback = 'style-loader';
+	const use = [
+		{ loader: 'css-loader', options: { modules: false, importLoaders: 2 } },
+		{ loader: 'postcss-loader', options: { plugins: () => autoprefixer() } },
+		{ loader: 'less-loader' },
+	];
+	const test = /.less$/;
 
-  const rule = {
-    test,
-    use: [fallback, ...use],
-  };
-  const extract = {
-    test,
-    use: ExtractTextPlugin.extract({
-      fallback,
-      use,
-    }),
-  };
+	const rule = {
+		test,
+		use: [fallback, ...use],
+	};
+	const extract = {
+		test,
+		use: ExtractTextPlugin.extract({
+			fallback,
+			use,
+		}),
+	};
 
-  return { rule, extract };
+	return { rule, extract };
 };
 
 export default style;
