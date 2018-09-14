@@ -28,7 +28,7 @@ const base: webpack.Configuration = {
 						// loaders with equal options will share worker pools
 						options: {
 							// the number of spawned workers, defaults to number of cpus
-							workers: isProd ? 2 : 3,
+							workers: isProd() ? 2 : 3,
 
 							// number of jobs a worker processes in parallel
 							// defaults to 20
