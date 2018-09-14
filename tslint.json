@@ -1,42 +1,42 @@
 {
   "extends": ["tslint:latest", "tslint-react", "tslint-config-prettier"],
   "rules": {
-    "arrow-parens": false,
-    "max-line-length": [true, 80],
-    "quotemark": [true, "single", "jsx-double"],
-    "indent": [true, "spaces"],
-    "interface-name": false,
-    "variable-name": [
-      true,
-      "allow-leading-underscore",
-      "allow-trailing-underscore",
-      "allow-pascal-case"
-    ],
-    "ordered-imports": [false],
-    "object-literal-sort-keys": false,
-    "no-submodule-imports": [true, "@", "antd", "lodash"],
-    "no-implicit-dependencies": false,
-    "jsx-no-multiline-js": [false],
-    "jsx-boolean-value": [false],
-    "no-console": false
-  },
-  "jsRules": {
-    "max-line-length": [true, 80],
-    "quotemark": [true, "single"],
-    "indent": [true, "spaces"],
-    "variable-name": [
-      true,
-      "allow-leading-underscore",
-      "allow-trailing-underscore",
-      "allow-pascal-case"
-    ],
-    "ordered-imports": [false],
-    "object-literal-sort-keys": false,
-    "no-unused-expression": true,
-    "no-console": false,
-    "prefer-conditional-expression": false,
-    "jsx-no-multiline-js": [false],
-    "jsx-boolean-value": [false]
-  },
-  "defaultSeverity": "warning"
+      "arrow-parens": false,
+      "max-line-length": [true, 130],
+      "quotemark": [true, "single", "jsx-double"],
+      "indent": [true, "tabs", 1],
+      "interface-name": false,
+      "variable-name": [
+          true,
+          "allow-leading-underscore",
+          "allow-trailing-underscore",
+          "allow-pascal-case"
+      ],
+      "ordered-imports": [false],
+      "object-literal-sort-keys": false,
+      "no-submodule-imports": [true, "@", "antd", "lodash"],
+      "no-implicit-dependencies": false,
+      "jsx-no-multiline-js": [false],
+      "jsx-boolean-value": [false],
+      "no-console": false
+      },
+      "jsRules": {
+          "max-line-length": [true, 130],
+          "quotemark": [true, "single"],
+          "indent": [true, "tabs", 1],
+          "variable-name": [
+              true,
+              "allow-leading-underscore",
+              "allow-trailing-underscore",
+              "allow-pascal-case"
+          ],
+          "ordered-imports": [false],
+          "object-literal-sort-keys": false,
+          "no-unused-expression": true,
+          "no-console": false,
+          "prefer-conditional-expression": false,
+          "jsx-no-multiline-js": [false],
+          "jsx-boolean-value": [false]
+      },
+      "defaultSeverity": "warning"
 }
