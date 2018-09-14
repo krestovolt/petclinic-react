@@ -18,25 +18,21 @@ import { action } from 'mobx';
 import { decorate, invokedWithArgs, setterName } from './utils';
 
 function getDecorator(wa: boolean, custom?: any): PropertyDecorator {
-  return (
-    target: any,
-    property: string | symbol,
-    description?: PropertyDescriptor,
-  ) => {
-    const fnName = (wa && custom) || setterName(property.toString(), 'toggle');
+	return (target: any, property: string | symbol, description?: PropertyDescriptor) => {
+		const fnName = (wa && custom) || setterName(property.toString(), 'toggle');
 
-    Object.defineProperty(target, fnName, {
-      value: action(fnName, function(this: any) {
-        this[property] = !this[property];
-      }),
-    });
+		Object.defineProperty(target, fnName, {
+			value: action(fnName, function(this: any) {
+				this[property] = !this[property];
+			}),
+		});
 
-    return description && { ...description, configurable: true };
-  };
+		return description && { ...description, configurable: true };
+	};
 }
 
 export default function setter(custom?: any) {
-  const wa = invokedWithArgs(arguments);
-  const decorator = getDecorator(wa, custom);
-  return decorate(wa, decorator, arguments);
+	const wa = invokedWithArgs(arguments);
+	const decorator = getDecorator(wa, custom);
+	return decorate(wa, decorator, arguments);
 }

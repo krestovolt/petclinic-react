@@ -16,18 +16,13 @@
 import { strings } from '@/utils';
 
 export function invokedWithArgs(args: any) {
-  return (
-    args.length !== 3 ||
-    typeof args[0] !== 'object' ||
-    typeof args[1] !== 'string' ||
-    typeof args[2] !== 'object'
-  );
+	return args.length !== 3 || typeof args[0] !== 'object' || typeof args[1] !== 'string' || typeof args[2] !== 'object';
 }
 
 export function decorate(wa: boolean, decorator: any, args: any) {
-  return wa ? decorator : decorator(...args);
+	return wa ? decorator : decorator(...args);
 }
 
 export function setterName(property: string, prefix: string = 'set') {
-  return `${prefix}${strings.capitalize(property)}`;
+	return `${prefix}${strings.capitalize(property)}`;
 }

@@ -24,30 +24,30 @@ import App from './App';
 const { Sider, Content } = Layout;
 
 class Admin extends App {
-  public componentDidMount() {
-    // this.props.app.setTitle('Admin');
-  }
+	public componentDidMount() {
+		// this.props.app.setTitle('Admin');
+	}
 
-  public render(): ReactNode {
-    const { session, onMenuClick } = this.props;
-    return (
-      <Layout className="pc-main">
-        <Sider trigger={null} collapsible className="pc-sider">
-          <div className="logo" />
-        </Sider>
-        <Layout>
-          <TopBar
-            menu={this.app.topbar}
-            sidebarCollapsed={this.app.sidebarCollapsed}
-            session={session.current}
-            sidebarToggle={this.app.sidebarToggle.bind(this.app)}
-            onMenuClick={onMenuClick}
-          />
-          <Content />
-        </Layout>
-      </Layout>
-    );
-  }
+	public render(): ReactNode {
+		const { session, onMenuClick } = this.props;
+		return (
+			<Layout className="pc-main">
+				<Sider trigger={null} collapsible className="pc-sider">
+					<div className="logo" />
+				</Sider>
+				<Layout>
+					<TopBar
+						menu={this.app.topbar}
+						sidebarCollapsed={this.app.sidebarCollapsed}
+						session={session.current}
+						sidebarToggle={this.app.sidebarToggle.bind(this.app)}
+						onMenuClick={onMenuClick}
+					/>
+					<Content />
+				</Layout>
+			</Layout>
+		);
+	}
 }
 
 export { Admin };

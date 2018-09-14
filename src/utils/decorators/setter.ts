@@ -17,43 +17,35 @@
 import { action } from 'mobx';
 import { decorate, invokedWithArgs, setterName } from './utils';
 
-function getDecorator(
-  wa: boolean,
-  name?: any,
-  custom?: any,
-): PropertyDecorator {
-  return (
-    target: any,
-    property: string | symbol,
-    description?: PropertyDescriptor,
-  ) => {
-    if (!wa) {
-      name = undefined;
-      custom = undefined;
-    }
+function getDecorator(wa: boolean, name?: any, custom?: any): PropertyDecorator {
+	return (target: any, property: string | symbol, description?: PropertyDescriptor) => {
+		if (!wa) {
+			name = undefined;
+			custom = undefined;
+		}
 
-    if (typeof name !== 'string') {
-      custom = name;
-      name = undefined;
-    }
+		if (typeof name !== 'string') {
+			custom = name;
+			name = undefined;
+		}
 
-    name = name || setterName(property.toString());
+		name = name || setterName(property.toString());
 
-    Object.defineProperty(target, name, {
-      value: action(name, function(this: any, val: any) {
-        if (custom !== undefined) {
-          val = typeof custom === 'function' ? custom.call(this, val) : custom;
-        }
-        this[property] = val;
-      }),
-    });
+		Object.defineProperty(target, name, {
+			value: action(name, function(this: any, val: any) {
+				if (custom !== undefined) {
+					val = typeof custom === 'function' ? custom.call(this, val) : custom;
+				}
+				this[property] = val;
+			}),
+		});
 
-    return description && { ...description, configurable: true };
-  };
+		return description && { ...description, configurable: true };
+	};
 }
 
 export default function setter(name?: any, custom?: any) {
-  const wa = invokedWithArgs(arguments);
-  const decorator = getDecorator(wa, name, custom);
-  return decorate(wa, decorator, arguments);
+	const wa = invokedWithArgs(arguments);
+	const decorator = getDecorator(wa, name, custom);
+	return decorate(wa, decorator, arguments);
 }

@@ -14,15 +14,11 @@
  *    limitations under the License.
  */
 
-export const jsonRes = (
-  body: any,
-  headers: Headers = new Headers(),
-  status: number = 200,
-): any => {
-  headers.set('Content-Type', 'application/json');
-  return {
-    body: JSON.stringify(Array.isArray(body) ? { data: body } : body),
-    headers,
-    status,
-  };
+export const jsonRes = (body: any, headers: Headers = new Headers(), status: number = 200): any => {
+	headers.set('Content-Type', 'application/json');
+	return {
+		body: JSON.stringify(Array.isArray(body) ? { data: body } : body),
+		headers,
+		status,
+	};
 };

@@ -19,8 +19,8 @@ import * as strings from './strings';
 import * as decorators from './decorators';
 
 export function subdomain() {
-  const parts = window.location.host.split('.');
-  return parts.length === 3 ? parts[0] : '';
+	const parts = window.location.host.split('.');
+	return parts.length === 3 ? parts[0] : '';
 }
 
 export { async, decorators, strings };

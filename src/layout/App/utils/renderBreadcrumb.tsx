@@ -20,34 +20,34 @@ import { Icon, Breadcrumb } from 'antd';
 import { IBreadcrumb } from '../stores';
 
 const renderBreadcrumb = (item: IBreadcrumb): ReactNode => {
-  let title: ReactNode = item.label;
+	let title: ReactNode = item.label;
 
-  if (typeof item.label === 'string' || typeof item.label === 'number') {
-    if (item.icon) {
-      if (typeof item.icon === 'string') {
-        title = (
-          <span className="pc-breadcrumb-item-title">
-            <Icon type={item.icon} />
-            <span className="pc-breadcrumb-text">{item.label}</span>
-          </span>
-        );
-      } else {
-        title = (
-          <span className="pc-breadcrumb-item-title">
-            {item.icon}
-            <span className="pc-breadcrumb-text">{item.label}</span>
-          </span>
-        );
-      }
-    }
-  }
+	if (typeof item.label === 'string' || typeof item.label === 'number') {
+		if (item.icon) {
+			if (typeof item.icon === 'string') {
+				title = (
+					<span className="pc-breadcrumb-item-title">
+						<Icon type={item.icon} />
+						<span className="pc-breadcrumb-text">{item.label}</span>
+					</span>
+				);
+			} else {
+				title = (
+					<span className="pc-breadcrumb-item-title">
+						{item.icon}
+						<span className="pc-breadcrumb-text">{item.label}</span>
+					</span>
+				);
+			}
+		}
+	}
 
-  const link = <Link to={item.to}>{title}</Link>;
-  return (
-    <Breadcrumb.Item className="pc-breadcrumb-item" key={`bread-${item.id}`}>
-      {item.to === '' ? title : link}
-    </Breadcrumb.Item>
-  );
+	const link = <Link to={item.to}>{title}</Link>;
+	return (
+		<Breadcrumb.Item className="pc-breadcrumb-item" key={`bread-${item.id}`}>
+			{item.to === '' ? title : link}
+		</Breadcrumb.Item>
+	);
 };
 
 export default renderBreadcrumb;

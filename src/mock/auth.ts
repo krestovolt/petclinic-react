@@ -24,27 +24,25 @@ import { jsonRes } from './utils';
 let savedSession: any = null;
 
 export const mockAuth = (fm: typeof fetchMock) => {
-  fm
-    .post(`${path.LOGIN}/${subdomain()}`, (url, opts: RequestInit) => {
-      if (opts.body) {
-        const body = JSON.parse(opts.body as string);
-        let role = subdomain();
-        role = role.length === 0 ? ROLE_OWNER : role;
-        const _session = users.find(
-          u => u.email === body.email && u.role === role,
-        );
-        if (_session) {
-          const session = { ..._session, role: _session.role.name };
-          savedSession = session;
-          return jsonRes(session);
-        }
-      }
-      return jsonRes({ message: 'Invalid credentials' }, undefined, 401);
-    })
-    .post(path.LOGOUT, (_, __) => {
-      savedSession = null;
-      return { status: 200 };
-    });
+	fm
+		.post(`${path.LOGIN}/${subdomain()}`, (url, opts: RequestInit) => {
+			if (opts.body) {
+				const body = JSON.parse(opts.body as string);
+				let role = subdomain();
+				role = role.length === 0 ? ROLE_OWNER : role;
+				const _session = users.find(u => u.email === body.email && u.role === role);
+				if (_session) {
+					const session = { ..._session, role: _session.role.name };
+					savedSession = session;
+					return jsonRes(session);
+				}
+			}
+			return jsonRes({ message: 'Invalid credentials' }, undefined, 401);
+		})
+		.post(path.LOGOUT, (_, __) => {
+			savedSession = null;
+			return { status: 200 };
+		});
 };
 
 export const getSession = () => savedSession;

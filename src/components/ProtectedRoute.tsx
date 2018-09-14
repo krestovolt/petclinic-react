@@ -20,31 +20,24 @@ import { ISessionStore } from '@/stores/SessionStore';
 import LazyRoute, { LazyRouteProps } from './LazyRoute';
 
 const RedirectLogin: any = withRouter((props: any) => {
-  return (
-    <Redirect
-      to={{ pathname: '/auth/login', state: { from: props.location } }}
-    />
-  );
+	return <Redirect to={{ pathname: '/auth/login', state: { from: props.location } }} />;
 });
 
 export interface ProtectedRouteProps extends LazyRouteProps {
-  session: ISessionStore;
+	session: ISessionStore;
 }
 
 export default class ProtectedRoute extends LazyRoute<ProtectedRouteProps> {
-  constructor(props: ProtectedRouteProps, context?: any) {
-    super(props, context, () => {
-      console.info('ProtectedRoute - loading protected component');
-      return props.session
-        .load()
-        .then(_ => props.loader(props.session))
-        .catch(err => {
-          console.log(
-            'ProtectedRoute - failed loading session or component',
-            err,
-          );
-          return RedirectLogin;
-        });
-    });
-  }
+	constructor(props: ProtectedRouteProps, context?: any) {
+		super(props, context, () => {
+			console.info('ProtectedRoute - loading protected component');
+			return props.session
+				.load()
+				.then(_ => props.loader(props.session))
+				.catch(err => {
+					console.log('ProtectedRoute - failed loading session or component', err);
+					return RedirectLogin;
+				});
+		});
+	}
 }

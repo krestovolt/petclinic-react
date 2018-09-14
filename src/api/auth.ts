@@ -19,35 +19,32 @@ import { ISession } from '@/types';
 import { subdomain } from '@/utils';
 
 export interface ILoginPayload {
-  email: string;
-  password: string;
-  remember?: boolean;
+	email: string;
+	password: string;
+	remember?: boolean;
 }
 
 export default class AuthApi {
-  private frest: Frest;
+	private frest: Frest;
 
-  constructor(frest: Frest) {
-    this.frest = frest;
-  }
+	constructor(frest: Frest) {
+		this.frest = frest;
+	}
 
-  public login = async (body: ILoginPayload) => {
-    const sub = subdomain();
-    const res = await this.frest.post<ISession>(
-      this.path('login', sub === '' ? 'owner' : sub),
-      {
-        body,
-      },
-    );
-    if (res.origin.ok && res.body) {
-      return res.body;
-    }
-    throw new Error('Invalid response');
-  };
+	public login = async (body: ILoginPayload) => {
+		const sub = subdomain();
+		const res = await this.frest.post<ISession>(this.path('login', sub === '' ? 'owner' : sub), {
+			body,
+		});
+		if (res.origin.ok && res.body) {
+			return res.body;
+		}
+		throw new Error('Invalid response');
+	};
 
-  public logout = () => this.frest.post<{}>(this.path('logout'));
+	public logout = () => this.frest.post<{}>(this.path('logout'));
 
-  private path(sub: string = '', ...rest: string[]) {
-    return ['auth', sub, ...rest];
-  }
+	private path(sub: string = '', ...rest: string[]) {
+		return ['auth', sub, ...rest];
+	}
 }

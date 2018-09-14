@@ -18,21 +18,21 @@ import { Frest } from 'frest';
 import { ISession } from '@/types';
 
 export default class UserApi {
-  private frest: Frest;
+	private frest: Frest;
 
-  constructor(frest: Frest) {
-    this.frest = frest;
-  }
+	constructor(frest: Frest) {
+		this.frest = frest;
+	}
 
-  public me = async () => {
-    const res = await this.frest.get<ISession>(this.path('me'));
-    if (res.origin.ok && res.body) {
-      return res.body;
-    }
-    throw new Error('Invalid response');
-  };
+	public me = async () => {
+		const res = await this.frest.get<ISession>(this.path('me'));
+		if (res.origin.ok && res.body) {
+			return res.body;
+		}
+		throw new Error('Invalid response');
+	};
 
-  private path(sub: string = '') {
-    return ['users', sub];
-  }
+	private path(sub: string = '') {
+		return ['users', sub];
+	}
 }

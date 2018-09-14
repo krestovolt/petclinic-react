@@ -20,59 +20,53 @@ import { CheckboxProps } from 'antd/es/checkbox';
 import { DescriptorObject, DescriptorFnObject } from 'async-validator';
 
 export interface FieldOption {
-  [key: string]: any;
-  rules?: DescriptorObject | Array<DescriptorFnObject & DescriptorObject>;
-  validateTrigger?: string;
-  appendProps?: InputProps | CheckboxProps;
-  initialValue?: any;
-  parseValue?(value: any): any;
+	[key: string]: any;
+	rules?: DescriptorObject | Array<DescriptorFnObject & DescriptorObject>;
+	validateTrigger?: string;
+	appendProps?: InputProps | CheckboxProps;
+	initialValue?: any;
+	parseValue?(value: any): any;
 }
 
 export interface FieldOptions {
-  [key: string]: FieldOption;
+	[key: string]: FieldOption;
 }
 
 export interface FormStore {
-  readonly __options?: FieldOptions;
+	readonly __options?: FieldOptions;
 }
 
 export interface CreateFormOption<S extends FormStore = FormStore> {
-  store?: S;
-  prefix?: string;
-  defaultItemProps?: any;
-  displayDefaultLabel?: boolean;
+	store?: S;
+	prefix?: string;
+	defaultItemProps?: any;
+	displayDefaultLabel?: boolean;
 }
 
 export interface FormHOCProps<S extends FormStore = FormStore> {
-  form: WrappedForm<S>;
+	form: WrappedForm<S>;
 }
 
 export interface FormHOCPropsExtra<S extends FormStore = FormStore> {
-  store?: S;
-  rootRef?: Ref<any>;
+	store?: S;
+	rootRef?: Ref<any>;
 }
 
 export interface WrappedForm<S extends FormStore = FormStore> {
-  validateFields<R = any>(callback?: (fields: any) => any): Promise<R>;
-  getFieldError(name: string): any;
-  getFieldsError(): any;
-  getStore(): S;
-  getFieldProps(name: string, customFieldOption?: FieldOption): any;
+	validateFields<R = any>(callback?: (fields: any) => any): Promise<R>;
+	getFieldError(name: string): any;
+	getFieldsError(): any;
+	getStore(): S;
+	getFieldProps(name: string, customFieldOption?: FieldOption): any;
 }
 
-export interface WrappedFormClass<
-  S extends FormStore = FormStore,
-  P extends FormHOCProps<S> = FormHOCProps<S>
-> extends ComponentClass<Omit<P, keyof FormHOCProps> & FormHOCPropsExtra<S>> {}
+export interface WrappedFormClass<S extends FormStore = FormStore, P extends FormHOCProps<S> = FormHOCProps<S>>
+	extends ComponentClass<Omit<P, keyof FormHOCProps> & FormHOCPropsExtra<S>> {}
 
-export type FormDecorator<
-  S extends FormStore = FormStore,
-  P extends FormHOCProps<S> = FormHOCProps<S>
-> = (
-  Component: ComponentType<P & ClassAttributes<any>>,
+export type FormDecorator<S extends FormStore = FormStore, P extends FormHOCProps<S> = FormHOCProps<S>> = (
+	Component: ComponentType<P & ClassAttributes<any>>,
 ) => WrappedFormClass<S, P>;
 
-export type CreateFormFn<
-  S extends FormStore = FormStore,
-  P extends FormHOCProps<S> = FormHOCProps<S>
-> = (options?: CreateFormOption<S>) => FormDecorator<S, P>;
+export type CreateFormFn<S extends FormStore = FormStore, P extends FormHOCProps<S> = FormHOCProps<S>> = (
+	options?: CreateFormOption<S>,
+) => FormDecorator<S, P>;

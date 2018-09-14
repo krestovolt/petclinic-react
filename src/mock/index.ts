@@ -21,12 +21,12 @@ import { mockAuth } from './auth';
 import { withMock } from '@/api';
 
 export const mock = () => {
-  (fetchMock as any).config.fetch = fetch;
-  const fm: any = (fetchMock as any).sandbox();
-  mockRoles(fm);
-  mockUsers(fm);
-  mockAuth(fm);
-  withMock(fm);
+	(fetchMock as any).config.fetch = fetch;
+	const fm: any = (fetchMock as any).sandbox();
+	mockRoles(fm);
+	mockUsers(fm);
+	mockAuth(fm);
+	withMock(fm);
 
-  return fm;
+	return fm;
 };

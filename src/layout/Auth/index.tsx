@@ -17,15 +17,13 @@
 import { RouteComponentProps } from 'react-router-dom';
 import { Module } from 'react-universal-component';
 
-export default function authLoader(): Promise<
-  Module<RouteComponentProps<any>>
-> {
-  console.info('loader - loading Auth component');
-  $fullLoadingShow();
-  return import('./Auth')
-    .then(r => {
-      console.info('loader - loaded Auth component');
-      return r;
-    })
-    .finally($fullLoadingHide);
+export default function authLoader(): Promise<Module<RouteComponentProps<any>>> {
+	console.info('loader - loading Auth component');
+	$fullLoadingShow();
+	return import('./Auth')
+		.then(r => {
+			console.info('loader - loaded Auth component');
+			return r;
+		})
+		.finally($fullLoadingHide);
 }

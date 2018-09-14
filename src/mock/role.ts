@@ -20,23 +20,23 @@ import * as path from './path';
 import { jsonRes } from './utils';
 
 export const roles = [
-  {
-    id: 1,
-    name: ROLE_ADMIN,
-  },
-  {
-    id: 2,
-    name: ROLE_VET,
-  },
-  {
-    id: 3,
-    name: ROLE_OWNER,
-  },
+	{
+		id: 1,
+		name: ROLE_ADMIN,
+	},
+	{
+		id: 2,
+		name: ROLE_VET,
+	},
+	{
+		id: 3,
+		name: ROLE_OWNER,
+	},
 ];
 
 export const mockRoles = (fm: typeof fetchMock) => {
-  fm.get(path.ROLE, jsonRes(roles));
-  roles.forEach(role => {
-    fm.get(`${path.ROLE}/${role.id}`, jsonRes(role));
-  });
+	fm.get(path.ROLE, jsonRes(roles));
+	roles.forEach(role => {
+		fm.get(`${path.ROLE}/${role.id}`, jsonRes(role));
+	});
 };

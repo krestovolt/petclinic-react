@@ -17,9 +17,9 @@
 import MobxDevTools from 'mobx-react-devtools';
 
 const DevTools: typeof MobxDevTools =
-  process.env.NODE_ENV === 'production'
-    ? () => null
-    : // tslint:disable-next-line:no-var-requires
-      require('mobx-react-devtools').default;
+	process.env.NODE_ENV === 'production'
+		? () => null
+		: // tslint:disable-next-line:no-var-requires
+		  require('mobx-react-devtools').default;
 
 export default DevTools;

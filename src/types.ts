@@ -17,25 +17,25 @@
 // various utility interfaces
 
 export interface IKV<V = any> {
-  [index: string]: V;
+	[index: string]: V;
 }
 
 // tslint:disable-next-line:ban-types
 export interface IKVFunc extends IKV<Function> {}
 
 export interface ICommonStore {
-  loading: boolean;
+	loading: boolean;
 }
 
 export interface ICommonStoreAction {
-  loadingStart(): void;
-  loadingStop(): void;
+	loadingStart(): void;
+	loadingStop(): void;
 }
 
 export interface ISession {
-  id: number;
-  email: string;
-  role: string;
-  firstName?: string;
-  lastName?: string;
+	id: number;
+	email: string;
+	role: string;
+	firstName?: string;
+	lastName?: string;
 }

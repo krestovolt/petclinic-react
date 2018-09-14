@@ -19,25 +19,27 @@ import { observable } from 'mobx';
 import { FormStore, FieldOptions } from '@/components/Form';
 
 export default class LoginForm implements FormStore {
-  @observable public email: string = '';
-  @observable public password: string = '';
+	@observable
+	public email: string = '';
+	@observable
+	public password: string = '';
 
-  public get __options(): FieldOptions {
-    return {
-      email: {
-        rules: {
-          type: 'email',
-          required: true,
-          message: 'Please input your valid email address',
-        },
-      },
-      password: {
-        rules: {
-          type: 'string',
-          required: true,
-          message: 'Please input your password',
-        },
-      },
-    };
-  }
+	public get __options(): FieldOptions {
+		return {
+			email: {
+				rules: {
+					type: 'email',
+					required: true,
+					message: 'Please input your valid email address',
+				},
+			},
+			password: {
+				rules: {
+					type: 'string',
+					required: true,
+					message: 'Please input your password',
+				},
+			},
+		};
+	}
 }

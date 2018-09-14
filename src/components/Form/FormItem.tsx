@@ -23,58 +23,46 @@ import * as t from './types';
 import { checkIsRequired } from './utils';
 
 @observer
-export default class FormItem extends Component<
-  FormItemProps & { disabledValidate?: boolean }
-> {
-  public static contextTypes = {
-    form: PropTypes.object, // the form object
-    defaultItemProps: PropTypes.object, // global default FormItem props
-    displayDefaultLabel: PropTypes.bool, // display the default label if not set
-  };
+export default class FormItem extends Component<FormItemProps & { disabledValidate?: boolean }> {
+	public static contextTypes = {
+		form: PropTypes.object, // the form object
+		defaultItemProps: PropTypes.object, // global default FormItem props
+		displayDefaultLabel: PropTypes.bool, // display the default label if not set
+	};
 
-  public render(): ReactNode {
-    let fieldOption: t.FieldOption | null = null;
-    const children = Children.toArray(this.props.children);
-    for (const child of children) {
-      if (typeof child !== 'string' && typeof child !== 'number') {
-        const childFieldOption = this.context.form.fieldOptions[
-          child.props && child.props['data-field-name']
-        ];
-        if (childFieldOption && typeof childFieldOption === 'object') {
-          fieldOption = childFieldOption;
-          break;
-        }
-      }
-    }
+	public render(): ReactNode {
+		let fieldOption: t.FieldOption | null = null;
+		const children = Children.toArray(this.props.children);
+		for (const child of children) {
+			if (typeof child !== 'string' && typeof child !== 'number') {
+				const childFieldOption = this.context.form.fieldOptions[child.props && child.props['data-field-name']];
+				if (childFieldOption && typeof childFieldOption === 'object') {
+					fieldOption = childFieldOption;
+					break;
+				}
+			}
+		}
 
-    const appendProps: FormItemProps = {};
-    if (fieldOption) {
-      const name = fieldOption.name;
+		const appendProps: FormItemProps = {};
+		if (fieldOption) {
+			const name = fieldOption.name;
 
-      // display default label ?
-      if (this.context.displayDefaultLabel && this.props.label === undefined) {
-        appendProps.label = name;
-      }
+			// display default label ?
+			if (this.context.displayDefaultLabel && this.props.label === undefined) {
+				appendProps.label = name;
+			}
 
-      // set validate status
-      if (!this.props.disabledValidate) {
-        const err = this.context.form.errors.get(name);
-        if (err) {
-          appendProps.validateStatus = err.length > 0 ? 'error' : 'success';
-        }
-        appendProps.required = checkIsRequired(fieldOption.rules);
-        appendProps.help =
-          appendProps.validateStatus === 'error' &&
-          err.map(({ message }: any) => message).join(' ');
-      }
-    }
+			// set validate status
+			if (!this.props.disabledValidate) {
+				const err = this.context.form.errors.get(name);
+				if (err) {
+					appendProps.validateStatus = err.length > 0 ? 'error' : 'success';
+				}
+				appendProps.required = checkIsRequired(fieldOption.rules);
+				appendProps.help = appendProps.validateStatus === 'error' && err.map(({ message }: any) => message).join(' ');
+			}
+		}
 
-    return (
-      <Form.Item
-        {...this.context.defaultItemProps}
-        {...appendProps}
-        {...this.props}
-      />
-    );
-  }
+		return <Form.Item {...this.context.defaultItemProps} {...appendProps} {...this.props} />;
+	}
 }

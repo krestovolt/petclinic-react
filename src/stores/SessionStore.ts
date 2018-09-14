@@ -21,118 +21,118 @@ import * as t from '@/types';
 import { subdomain } from '@/utils';
 
 export interface ISessionStore extends t.ICommonStore, t.ICommonStoreAction {
-  readonly authenticated: boolean;
-  readonly current: t.ISession;
-  load(): Promise<t.ISession>;
-  login(payload: a.ILoginPayload): Promise<t.ISession>;
-  logout(): Promise<void>;
-  addOnLogoutListener(listener: OnLogoutListener): void;
-  roleAuthorized(role: string): boolean;
+	readonly authenticated: boolean;
+	readonly current: t.ISession;
+	load(): Promise<t.ISession>;
+	login(payload: a.ILoginPayload): Promise<t.ISession>;
+	logout(): Promise<void>;
+	addOnLogoutListener(listener: OnLogoutListener): void;
+	roleAuthorized(role: string): boolean;
 }
 
 export type OnLogoutListener = (res: IResponse<{}>) => void;
 
 export default class SessionStore implements ISessionStore {
-  public static DEFAULT_SESSION: t.ISession = {
-    id: -1,
-    email: '',
-    role: '',
-  };
+	public static DEFAULT_SESSION: t.ISession = {
+		id: -1,
+		email: '',
+		role: '',
+	};
 
-  @observable public loading: boolean = false;
+	@observable
+	public loading: boolean = false;
 
-  @observable public authenticated = false;
+	@observable
+	public authenticated = false;
 
-  @observable public current: t.ISession = { ...SessionStore.DEFAULT_SESSION };
+	@observable
+	public current: t.ISession = { ...SessionStore.DEFAULT_SESSION };
 
-  private listeners: OnLogoutListener[] = [];
+	private listeners: OnLogoutListener[] = [];
 
-  private api: a.AuthApi;
-  private user: a.UserApi;
+	private api: a.AuthApi;
+	private user: a.UserApi;
 
-  constructor(
-    api: a.AuthApi = a.auth,
-    user: a.UserApi = a.user,
-  ) {
-    this.api = api;
-    this.user = user;
-  }
+	constructor(api: a.AuthApi = a.auth, user: a.UserApi = a.user) {
+		this.api = api;
+		this.user = user;
+	}
 
-  @action
-  public loadingStart = () => {
-    this.loading = true;
-  };
+	@action
+	public loadingStart = () => {
+		this.loading = true;
+	};
 
-  @action
-  public loadingStop = () => {
-    this.loading = false;
-  };
+	@action
+	public loadingStop = () => {
+		this.loading = false;
+	};
 
-  public load = async () => {
-    console.info('AuthStore#loadSession');
-    this.loadingStart();
-    try {
-      const result = await this.user.me();
-      this.setSession(result);
-      this.setAuthenticated();
-      return result;
-    } finally {
-      this.loadingStop();
-    }
-  };
+	public load = async () => {
+		console.info('AuthStore#loadSession');
+		this.loadingStart();
+		try {
+			const result = await this.user.me();
+			this.setSession(result);
+			this.setAuthenticated();
+			return result;
+		} finally {
+			this.loadingStop();
+		}
+	};
 
-  public login = async (payload: a.ILoginPayload) => {
-    this.loadingStart();
-    try {
-      const result = await this.api.login(payload);
-      this.setSession(result);
-      this.setAuthenticated();
-      return result;
-    } finally {
-      this.loadingStop();
-    }
-  };
+	public login = async (payload: a.ILoginPayload) => {
+		this.loadingStart();
+		try {
+			const result = await this.api.login(payload);
+			this.setSession(result);
+			this.setAuthenticated();
+			return result;
+		} finally {
+			this.loadingStop();
+		}
+	};
 
-  public logout = async () => {
-    this.loadingStart();
-    try {
-      const res = await this.api.logout();
-      this.listeners.forEach(listener => listener(res));
-      this.doLogout();
-    } finally {
-      this.loadingStop();
-    }
-  };
+	public logout = async () => {
+		this.loadingStart();
+		try {
+			const res = await this.api.logout();
+			this.listeners.forEach(listener => listener(res));
+			this.doLogout();
+		} finally {
+			this.loadingStop();
+		}
+	};
 
-  public addOnLogoutListener(listener: OnLogoutListener) {
-    this.listeners.push(listener);
-  }
+	public addOnLogoutListener(listener: OnLogoutListener) {
+		this.listeners.push(listener);
+	}
 
-  public roleAuthorized(role: string): boolean {
-    if (this.current && this.authenticated) {
-      const authorized = this.current.role === `ROLE_${role.toUpperCase()}`;
-      if (process.env.NODE_ENV === 'production') {
-        return authorized && subdomain() === role;
-      }
-      return authorized;
-    }
-    return false;
-  }
+	public roleAuthorized(role: string): boolean {
+		if (this.current && this.authenticated) {
+			const authorized = this.current.role === `ROLE_${role.toUpperCase()}`;
+			if (process.env.NODE_ENV === 'production') {
+				return authorized && subdomain() === role;
+			}
+			return authorized;
+		}
+		return false;
+	}
 
-  @action
-  private setAuthenticated(val: boolean = true) {
-    this.authenticated = val;
-  }
+	@action
+	private setAuthenticated(val: boolean = true) {
+		this.authenticated = val;
+	}
 
-  @action
-  private setSession(session: t.ISession) {
-    this.current = session;
-  }
+	@action
+	private setSession(session: t.ISession) {
+		this.current = session;
+	}
 
-  @action
-  private doLogout() {
-    this.listeners = [];
-    this.setSession({ ...SessionStore.DEFAULT_SESSION });
-    this.setAuthenticated(false);
-  }
+	@action
+	private doLogout() {
+		this.listeners = [];
+		this.setSession({ ...SessionStore.DEFAULT_SESSION });
+		this.setAuthenticated(false);
+	}
 }

@@ -17,25 +17,23 @@
 import { DescriptorObject, DescriptorFnObject } from 'async-validator';
 
 const isTargetCheckbox = (inp: EventTarget): inp is HTMLInputElement => {
-  return (inp as HTMLInputElement).type === 'checkbox';
+	return (inp as HTMLInputElement).type === 'checkbox';
 };
 
 export function getValueFromEvent(e?: any) {
-  if (!e || !e.target) {
-    return e;
-  }
-  const { target } = e;
-  return isTargetCheckbox(target) ? target.checked : target.value;
+	if (!e || !e.target) {
+		return e;
+	}
+	const { target } = e;
+	return isTargetCheckbox(target) ? target.checked : target.value;
 }
 
-export function checkIsRequired(
-  rules?: DescriptorObject | Array<DescriptorFnObject & DescriptorObject>,
-) {
-  if (rules) {
-    if (Array.isArray(rules)) {
-      return rules.filter(({ required }) => required).length > 0;
-    }
-    return !!rules.required;
-  }
-  return false;
+export function checkIsRequired(rules?: DescriptorObject | Array<DescriptorFnObject & DescriptorObject>) {
+	if (rules) {
+		if (Array.isArray(rules)) {
+			return rules.filter(({ required }) => required).length > 0;
+		}
+		return !!rules.required;
+	}
+	return false;
 }

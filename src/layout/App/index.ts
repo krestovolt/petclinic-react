@@ -18,16 +18,14 @@ import { RouteComponentProps } from 'react-router-dom';
 import { Module } from 'react-universal-component';
 import { ISessionStore } from '@/stores';
 
-export default function appLoader(
-  sessionStore: ISessionStore,
-): Promise<Module<RouteComponentProps<any>>> {
-  console.info('loader - loading Layout component');
-  if (sessionStore.roleAuthorized('admin')) {
-    console.info('loader - loading Admin component');
-    return import('./Admin').then(r => {
-      console.info('loader - loaded Admin component');
-      return r;
-    });
-  }
-  return Promise.reject('Not logged in');
+export default function appLoader(sessionStore: ISessionStore): Promise<Module<RouteComponentProps<any>>> {
+	console.info('loader - loading Layout component');
+	if (sessionStore.roleAuthorized('admin')) {
+		console.info('loader - loading Admin component');
+		return import('./Admin').then(r => {
+			console.info('loader - loaded Admin component');
+			return r;
+		});
+	}
+	return Promise.reject('Not logged in');
 }

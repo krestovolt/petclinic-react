@@ -25,27 +25,24 @@ import { renderMenu } from '../utils';
 const { Header } = Layout;
 
 export interface TopBarProps {
-  menu: IMenu[];
-  sidebarCollapsed: boolean;
-  session: ISession;
-  sidebarToggle: () => any;
-  onMenuClick: (param: ClickParam) => any;
+	menu: IMenu[];
+	sidebarCollapsed: boolean;
+	session: ISession;
+	sidebarToggle: () => any;
+	onMenuClick: (param: ClickParam) => any;
 }
 
 export const TopBar: SFC<TopBarProps> = props => (
-  <Header className="pc-top-bar light">
-    <div className="pc-drawer-button">
-      <Icon
-        type={props.sidebarCollapsed ? 'menu-unfold' : 'menu-fold'}
-        onClick={props.sidebarToggle}
-      />
-    </div>
-    <div className="pc-top-bar-menu-container">
-      <Menu mode="horizontal" onClick={props.onMenuClick}>
-        {props.menu.map(m => renderMenu(m))}
-      </Menu>
-    </div>
-  </Header>
+	<Header className="pc-top-bar light">
+		<div className="pc-drawer-button">
+			<Icon type={props.sidebarCollapsed ? 'menu-unfold' : 'menu-fold'} onClick={props.sidebarToggle} />
+		</div>
+		<div className="pc-top-bar-menu-container">
+			<Menu mode="horizontal" onClick={props.onMenuClick}>
+				{props.menu.map(m => renderMenu(m))}
+			</Menu>
+		</div>
+	</Header>
 );
 
 export default observer(TopBar);

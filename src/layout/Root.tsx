@@ -12,32 +12,26 @@ import authLoader from '@/layout/Auth';
 useStrict(true);
 
 export default class Root extends Component {
-  private session: ISessionStore;
+	private session: ISessionStore;
 
-  constructor(props: any) {
-    super(props);
-    this.session = new SessionStore();
-  }
+	constructor(props: any) {
+		super(props);
+		this.session = new SessionStore();
+	}
 
-  public render(): ReactNode {
-    return (
-      <>
-        <Provider session={this.session}>
-          <Router>
-            <Switch>
-              <LazyRoute strict path="/auth" loader={authLoader} />
-              <ProtectedRoute
-                exact
-                strict
-                path="/"
-                session={this.session}
-                loader={appLoader}
-              />
-            </Switch>
-          </Router>
-        </Provider>
-        <DevTools position={{ bottom: 20, right: 20 }} />
-      </>
-    );
-  }
+	public render(): ReactNode {
+		return (
+			<>
+				<Provider session={this.session}>
+					<Router>
+						<Switch>
+							<LazyRoute strict path="/auth" loader={authLoader} />
+							<ProtectedRoute exact strict path="/" session={this.session} loader={appLoader} />
+						</Switch>
+					</Router>
+				</Provider>
+				<DevTools position={{ bottom: 20, right: 20 }} />
+			</>
+		);
+	}
 }

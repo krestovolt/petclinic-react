@@ -24,20 +24,20 @@ import Login from './Login';
 import './style';
 
 export interface AuthProps extends RouteComponentProps<any> {
-  session: ISessionStore;
+	session: ISessionStore;
 }
 
 export class Auth extends Component<AuthProps> {
-  public render(): ReactNode {
-    const { match } = this.props;
-    return (
-      <Row className="pc-auth" type="flex" justify="center" align="middle">
-        <Col className="pc-auth-box" xs={24} sm={16} md={12} lg={8}>
-          <Route exact strict path={`${match.url}/login`} component={Login} />
-        </Col>
-      </Row>
-    );
-  }
+	public render(): ReactNode {
+		const { match } = this.props;
+		return (
+			<Row className="pc-auth" type="flex" justify="center" align="middle">
+				<Col className="pc-auth-box" xs={24} sm={16} md={12} lg={8}>
+					<Route exact strict path={`${match.url}/login`} component={Login} />
+				</Col>
+			</Row>
+		);
+	}
 }
 
 export default hot(module)(inject('session')(observer(Auth)));

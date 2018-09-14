@@ -20,58 +20,47 @@ import { Icon, Menu } from 'antd';
 import { IMenu } from '../stores';
 
 const renderMenu = (item: IMenu): ReactNode => {
-  let title: ReactNode = item.label;
-  if (typeof item.label === 'string' || typeof item.label === 'number') {
-    if (item.icon) {
-      if (typeof item.icon === 'string') {
-        title = (
-          <span>
-            <Icon type={item.icon} />
-            <span className="pc-menu-text">{item.label}</span>
-          </span>
-        );
-      } else {
-        title = (
-          <span>
-            {item.icon}
-            <span className="pc-menu-text">{item.label}</span>
-          </span>
-        );
-      }
-    }
-  }
+	let title: ReactNode = item.label;
+	if (typeof item.label === 'string' || typeof item.label === 'number') {
+		if (item.icon) {
+			if (typeof item.icon === 'string') {
+				title = (
+					<span>
+						<Icon type={item.icon} />
+						<span className="pc-menu-text">{item.label}</span>
+					</span>
+				);
+			} else {
+				title = (
+					<span>
+						{item.icon}
+						<span className="pc-menu-text">{item.label}</span>
+					</span>
+				);
+			}
+		}
+	}
 
-  if (item.children && item.children.length > 0) {
-    if (item.group) {
-      return (
-        <Menu.ItemGroup
-          className={['pc-menu-group', item.className].join(' ')}
-          key={item.id}
-          title={title}
-        >
-          {item.children.map(renderMenu)}
-        </Menu.ItemGroup>
-      );
-    }
-    return (
-      <Menu.SubMenu
-        className={['pc-menu-sub', item.className].join(' ')}
-        key={item.id}
-        title={title}
-      >
-        {item.children.map(renderMenu)}
-      </Menu.SubMenu>
-    );
-  }
-  const link = <Link to={item.to}>{title}</Link>;
-  return (
-    <Menu.Item
-      className={['pc-menu-item', item.className].join(' ')}
-      key={item.id}
-    >
-      {item.to === '' ? title : link}
-    </Menu.Item>
-  );
+	if (item.children && item.children.length > 0) {
+		if (item.group) {
+			return (
+				<Menu.ItemGroup className={['pc-menu-group', item.className].join(' ')} key={item.id} title={title}>
+					{item.children.map(renderMenu)}
+				</Menu.ItemGroup>
+			);
+		}
+		return (
+			<Menu.SubMenu className={['pc-menu-sub', item.className].join(' ')} key={item.id} title={title}>
+				{item.children.map(renderMenu)}
+			</Menu.SubMenu>
+		);
+	}
+	const link = <Link to={item.to}>{title}</Link>;
+	return (
+		<Menu.Item className={['pc-menu-item', item.className].join(' ')} key={item.id}>
+			{item.to === '' ? title : link}
+		</Menu.Item>
+	);
 };
 
 export default renderMenu;

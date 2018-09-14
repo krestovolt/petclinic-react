@@ -24,82 +24,61 @@ import { createForm, FormItem, FormHOCProps } from '@/components/Form';
 import Loading from '@/components/Loading';
 import LoginForm from './stores/LoginForm';
 
-export interface LoginProps
-  extends RouteComponentProps<any>,
-    FormHOCProps<LoginForm> {
-  session: ISessionStore;
+export interface LoginProps extends RouteComponentProps<any>, FormHOCProps<LoginForm> {
+	session: ISessionStore;
 }
 
 export class Login extends Component<LoginProps> {
-  public render(): ReactNode {
-    const { session, form } = this.props;
-    const { getFieldProps } = form;
-    return (
-      <Loading spinning={session.loading}>
-        <Form
-          className="pc-auth-form"
-          layout="vertical"
-          onSubmit={this.handleSubmit}
-        >
-          {/* <FormItem className="pc-auth-form-title">
+	public render(): ReactNode {
+		const { session, form } = this.props;
+		const { getFieldProps } = form;
+		return (
+			<Loading spinning={session.loading}>
+				<Form className="pc-auth-form" layout="vertical" onSubmit={this.handleSubmit}>
+					{/* <FormItem className="pc-auth-form-title">
 
           </FormItem> */}
-          <div className="pc-auth-content">
-            <FormItem className="pc-auth-form-subtitle">
-              <h3>Login</h3>
-            </FormItem>
-            <FormItem className="pc-auth-form-item" label="Email" hasFeedback>
-              <Input
-                prefix={<Icon type="user" style={{ fontSize: 16 }} />}
-                placeholder="Email"
-                type="email"
-                {...getFieldProps('email')}
-              />
-            </FormItem>
-            <FormItem
-              className="pc-auth-form-item"
-              label="Password"
-              hasFeedback
-            >
-              <Input
-                prefix={<Icon type="lock" style={{ fontSize: 16 }} />}
-                placeholder="Password"
-                type="password"
-                {...getFieldProps('password')}
-              />
-            </FormItem>
-            <FormItem className="pc-auth-action-button">
-              <Link className="pc-login-form-forgot" to="/auth/forgot">
-                Forgot Password?
-              </Link>
-              <Button
-                className="pc-auth-form-button"
-                type="primary"
-                htmlType="submit"
-                disabled={session.loading}
-              >
-                Login
-              </Button>
-            </FormItem>
-          </div>
-        </Form>
-      </Loading>
-    );
-  }
+					<div className="pc-auth-content">
+						<FormItem className="pc-auth-form-subtitle">
+							<h3>Login</h3>
+						</FormItem>
+						<FormItem className="pc-auth-form-item" label="Email" hasFeedback>
+							<Input
+								prefix={<Icon type="user" style={{ fontSize: 16 }} />}
+								placeholder="Email"
+								type="email"
+								{...getFieldProps('email')}
+							/>
+						</FormItem>
+						<FormItem className="pc-auth-form-item" label="Password" hasFeedback>
+							<Input
+								prefix={<Icon type="lock" style={{ fontSize: 16 }} />}
+								placeholder="Password"
+								type="password"
+								{...getFieldProps('password')}
+							/>
+						</FormItem>
+						<FormItem className="pc-auth-action-button">
+							<Link className="pc-login-form-forgot" to="/auth/forgot">
+								Forgot Password?
+							</Link>
+							<Button className="pc-auth-form-button" type="primary" htmlType="submit" disabled={session.loading}>
+								Login
+							</Button>
+						</FormItem>
+					</div>
+				</Form>
+			</Loading>
+		);
+	}
 
-  private handleSubmit: FormEventHandler<any> = async e => {
-    e.preventDefault();
-    const { form, session, history } = this.props;
-    const result = await form.validateFields<ILoginPayload>(fields =>
-      console.log('error', fields),
-    );
-    await session.login(result);
-    history.replace('/');
-  };
+	private handleSubmit: FormEventHandler<any> = async e => {
+		e.preventDefault();
+		const { form, session, history } = this.props;
+		const result = await form.validateFields<ILoginPayload>(fields => console.log('error', fields));
+		await session.login(result);
+		history.replace('/');
+	};
 }
 
-export default inject('session')(
-  createForm<LoginForm, LoginProps>({ store: new LoginForm() })(
-    observer(Login),
-  ),
-);
+export default inject('session')(createForm<LoginForm, LoginProps>({ store: new LoginForm() })(observer(Login)));

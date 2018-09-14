@@ -18,16 +18,16 @@ import React, { SFC } from 'react';
 import { Spin } from 'antd';
 
 export interface ILoadingProps {
-  spinning: boolean;
-  tip?: string;
+	spinning: boolean;
+	tip?: string;
 }
 
 const Loading: SFC<ILoadingProps> = props => {
-  return (
-    <Spin spinning={props.spinning} tip={props.tip || 'Loading...'}>
-      {props.children}
-    </Spin>
-  );
+	return (
+		<Spin spinning={props.spinning} tip={props.tip || 'Loading...'}>
+			{props.children}
+		</Spin>
+	);
 };
 
 export default Loading;

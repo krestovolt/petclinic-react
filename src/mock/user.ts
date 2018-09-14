@@ -22,39 +22,39 @@ import { jsonRes } from './utils';
 import { getSession } from './auth';
 
 export const users: any[] = [
-  {
-    id: 1,
-    email: 'admin@example.com',
-    role: roles[0],
-    firstName: faker.name.firstName(0),
-    lastName: faker.name.lastName(0),
-  },
-  {
-    id: 2,
-    email: 'vet@example.com',
-    role: roles[1],
-    firstName: faker.name.firstName(0),
-    lastName: faker.name.lastName(0),
-  },
-  {
-    id: 3,
-    email: 'owner@example.com',
-    role: roles[2],
-    firstName: faker.name.firstName(0),
-    lastName: faker.name.lastName(0),
-  },
+	{
+		id: 1,
+		email: 'admin@example.com',
+		role: roles[0],
+		firstName: faker.name.firstName(0),
+		lastName: faker.name.lastName(0),
+	},
+	{
+		id: 2,
+		email: 'vet@example.com',
+		role: roles[1],
+		firstName: faker.name.firstName(0),
+		lastName: faker.name.lastName(0),
+	},
+	{
+		id: 3,
+		email: 'owner@example.com',
+		role: roles[2],
+		firstName: faker.name.firstName(0),
+		lastName: faker.name.lastName(0),
+	},
 ];
 
 export const mockUsers = (fm: typeof fetchMock) => {
-  fm.get(path.USER, jsonRes(roles));
-  roles.forEach(user => {
-    fm.get(`${path.USER}/${user.id}`, jsonRes(user));
-  });
-  fm.get(`${path.USER}/me`, () => {
-    const session = getSession();
-    if (session) {
-      return jsonRes(session);
-    }
-    return { status: 401 };
-  });
+	fm.get(path.USER, jsonRes(roles));
+	roles.forEach(user => {
+		fm.get(`${path.USER}/${user.id}`, jsonRes(user));
+	});
+	fm.get(`${path.USER}/me`, () => {
+		const session = getSession();
+		if (session) {
+			return jsonRes(session);
+		}
+		return { status: 401 };
+	});
 };

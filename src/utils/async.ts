@@ -15,5 +15,5 @@
  */
 
 export function* wait<T>(promise: Promise<T>): IterableIterator<Promise<T>> {
-  return (yield promise) as T;
+	return (yield promise) as T;
 }

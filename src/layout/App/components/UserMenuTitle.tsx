@@ -18,20 +18,20 @@ import React, { SFC } from 'react';
 import { Icon, Row, Col } from 'antd';
 
 export interface UserMenuTitleProps {
-  name: string;
-  role: string;
+	name: string;
+	role: string;
 }
 
 const UserMenuTitle: SFC<UserMenuTitleProps> = ({ name, role }) => (
-  <Row type="flex">
-    <Col span={24} className="pc-user-menu-title">
-      <Row>
-        <Icon type="user" />
-        {name}
-      </Row>
-      <Row>{role}</Row>
-    </Col>
-  </Row>
+	<Row type="flex">
+		<Col span={24} className="pc-user-menu-title">
+			<Row>
+				<Icon type="user" />
+				{name}
+			</Row>
+			<Row>{role}</Row>
+		</Col>
+	</Row>
 );
 
 export default UserMenuTitle;

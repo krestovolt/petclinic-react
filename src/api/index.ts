@@ -20,19 +20,19 @@ import AuthApi from './auth';
 import UserApi from './user';
 
 export const frest = new Frest({
-  base: '/api',
-  interceptors: {
-    before: [json.before()],
-    after: [json.after()],
-    error: [json.error()],
-  },
+	base: '/api',
+	interceptors: {
+		before: [json.before()],
+		after: [json.after()],
+		error: [json.error()],
+	},
 });
 
 export const auth = new AuthApi(frest);
 export const user = new UserApi(frest);
 
 export const withMock = (fetchFn: typeof fetch) => {
-  frest.mergeConfig({ fetch: fetchFn });
+	frest.mergeConfig({ fetch: fetchFn });
 };
 
 export { ILoginPayload } from './auth';
